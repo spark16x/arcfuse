@@ -14,7 +14,7 @@ export default function LandingPage() {
             <Link href="#" className="text-blue-400 font-semibold transition-all duration-300">Features</Link>
             <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Solutions</Link>
             <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Resources</Link>
-            <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Pricing</Link>
+            <Link href="/pricing" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Pricing</Link>
           </div>
           <div className="flex items-center gap-4">
             <button className="hidden sm:block text-slate-400 hover:text-slate-100 font-medium text-sm px-4 py-2 transition-all">
@@ -268,116 +268,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section className="py-24 bg-surface-container-low relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-sm font-bold tracking-[0.2em] text-secondary uppercase mb-4">Pricing Plans</h2>
-              <h3 className="text-3xl md:text-5xl font-black text-on-surface mb-6">Simple, transparent pricing</h3>
-              <p className="text-on-surface-variant max-w-2xl mx-auto">
-                Choose the plan that fits your workflow. Scale up as you grow your digital presence.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8 items-stretch">
-              {/* Starter Plan */}
-              <div className="bg-surface-container p-8 rounded-3xl border border-outline-variant/10 flex flex-col hover:bg-surface-container-high transition-all">
-                <div className="mb-8">
-                  <h4 className="text-xl font-bold text-on-surface mb-2">Starter</h4>
-                  <p className="text-on-surface-variant text-sm">For individuals getting started.</p>
-                </div>
-                <div className="mb-8 flex items-baseline gap-1">
-                  <span className="text-4xl font-black text-on-surface">$0</span>
-                  <span className="text-on-surface-variant text-sm font-medium">/ forever</span>
-                </div>
-                <ul className="space-y-4 mb-10 flex-1">
-                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
-                    2 platforms included
-                  </li>
-                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
-                    Basic analytics
-                  </li>
-                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
-                    Community support
-                  </li>
-                </ul>
-                <button className="w-full py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all">
-                  Get Started
-                </button>
-              </div>
 
-              {/* Pro Plan */}
-              <div className="bg-surface-container p-8 rounded-3xl border-2 border-primary/50 flex flex-col relative shadow-2xl shadow-primary/10 hover:bg-surface-container-high transition-all scale-105 z-10">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary px-4 py-1 rounded-full text-on-primary text-xs font-bold uppercase tracking-wider">
-                  Most Popular
-                </div>
-                <div className="mb-8">
-                  <h4 className="text-xl font-bold text-on-surface mb-2">Pro</h4>
-                  <p className="text-on-surface-variant text-sm">For creators and power users.</p>
-                </div>
-                <div className="mb-8 flex items-baseline gap-1">
-                  <span className="text-4xl font-black text-on-surface">$19</span>
-                  <span className="text-on-surface-variant text-sm font-medium">/ month</span>
-                </div>
-                <ul className="space-y-4 mb-10 flex-1">
-                  <li className="flex items-center gap-3 text-sm text-on-surface">
-                    <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    5 platforms included
-                  </li>
-                  <li className="flex items-center gap-3 text-sm text-on-surface">
-                    <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    Advanced analytics
-                  </li>
-                  <li className="flex items-center gap-3 text-sm text-on-surface">
-                    <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    Priority support
-                  </li>
-                  <li className="flex items-center gap-3 text-sm text-on-surface">
-                    <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    Custom themes
-                  </li>
-                </ul>
-                <button className="w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all">
-                  Get Started
-                </button>
-              </div>
-
-              {/* Enterprise Plan */}
-              <div className="bg-surface-container p-8 rounded-3xl border border-outline-variant/10 flex flex-col hover:bg-surface-container-high transition-all">
-                <div className="mb-8">
-                  <h4 className="text-xl font-bold text-on-surface mb-2">Enterprise</h4>
-                  <p className="text-on-surface-variant text-sm">For professional teams.</p>
-                </div>
-                <div className="mb-8 flex items-baseline gap-1">
-                  <span className="text-4xl font-black text-on-surface">Custom</span>
-                </div>
-                <ul className="space-y-4 mb-10 flex-1">
-                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
-                    Unlimited platforms
-                  </li>
-                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
-                    Dedicated account manager
-                  </li>
-                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
-                    API access
-                  </li>
-                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
-                    White-labeling
-                  </li>
-                </ul>
-                <button className="w-full py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all">
-                  Contact Sales
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Final CTA */}
         <section className="py-24 relative overflow-hidden">
