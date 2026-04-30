@@ -269,6 +269,76 @@ export default function LandingPage() {
         </section>
 
 
+              {/* Pro Plan */}
+              <div className="bg-surface-container p-8 rounded-3xl border-2 border-primary/50 flex flex-col relative shadow-2xl shadow-primary/10 hover:bg-surface-container-high transition-all scale-105 z-10">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary px-4 py-1 rounded-full text-on-primary text-xs font-bold uppercase tracking-wider">
+                  Most Popular
+                </div>
+                <div className="mb-8">
+                  <h4 className="text-xl font-bold text-on-surface mb-2">Pro</h4>
+                  <p className="text-on-surface-variant text-sm">For creators and power users.</p>
+                </div>
+                <div className="mb-8 flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-on-surface">$19</span>
+                  <span className="text-on-surface-variant text-sm font-medium">/ month</span>
+                </div>
+                <ul className="space-y-4 mb-10 flex-1">
+                  <li className="flex items-center gap-3 text-sm text-on-surface">
+                    <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    5 platforms included
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-on-surface">
+                    <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    Advanced analytics
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-on-surface">
+                    <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    Priority support
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-on-surface">
+                    <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    Custom themes
+                  </li>
+                </ul>
+                <button className="w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all">
+                  Get Started
+                </button>
+              </div>
+
+              {/* Enterprise Plan */}
+              <div className="bg-surface-container p-8 rounded-3xl border border-outline-variant/10 flex flex-col hover:bg-surface-container-high transition-all">
+                <div className="mb-8">
+                  <h4 className="text-xl font-bold text-on-surface mb-2">Enterprise</h4>
+                  <p className="text-on-surface-variant text-sm">For professional teams.</p>
+                </div>
+                <div className="mb-8 flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-on-surface">Custom</span>
+                </div>
+                <ul className="space-y-4 mb-10 flex-1">
+                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
+                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
+                    Unlimited platforms
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
+                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
+                    Dedicated account manager
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
+                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
+                    API access
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-on-surface-variant">
+                    <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
+                    White-labeling
+                  </li>
+                </ul>
+                <Link href="/contact" className="w-full block text-center py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all">
+                  Contact Sales
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Final CTA */}
         <section className="py-24 relative overflow-hidden">
@@ -282,7 +352,7 @@ export default function LandingPage() {
               <button className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-primary/30 active:scale-95 transition-all">
                 Sign Up Now
               </button>
-              <Link href="#" className="text-on-surface font-semibold flex items-center justify-center gap-2 group">
+              <Link href="/contact" className="text-on-surface font-semibold flex items-center justify-center gap-2 group">
                 Talk to Sales
                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </Link>
@@ -305,7 +375,7 @@ export default function LandingPage() {
             <Link href="/terms-of-service" className="hover:text-slate-300 hover:underline transition-all">Terms of Service</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Security</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Status</Link>
-            <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Contact</Link>
+            <Link href="/contact" className="hover:text-slate-300 hover:underline transition-all">Contact</Link>
           </nav>
           <div className="flex gap-6 items-center">
             <Link href="#" className="text-slate-500 hover:text-blue-400 transition-colors">
