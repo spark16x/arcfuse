@@ -14,7 +14,7 @@ export default function LandingPage() {
             <Link href="#" className="text-blue-400 font-semibold transition-all duration-300">Features</Link>
             <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Solutions</Link>
             <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Resources</Link>
-            <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Pricing</Link>
+            <Link href="/pricing" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Pricing</Link>
           </div>
           <div className="flex items-center gap-4">
             <button className="hidden sm:block text-slate-400 hover:text-slate-100 font-medium text-sm px-4 py-2 transition-all">
@@ -371,9 +371,9 @@ export default function LandingPage() {
                     White-labeling
                   </li>
                 </ul>
-                <Link href="/contact" className="w-full block text-center py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all">
+                <button className="w-full py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all">
                   Contact Sales
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -391,7 +391,7 @@ export default function LandingPage() {
               <button className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-primary/30 active:scale-95 transition-all">
                 Sign Up Now
               </button>
-              <Link href="/contact" className="text-on-surface font-semibold flex items-center justify-center gap-2 group">
+              <Link href="#" className="text-on-surface font-semibold flex items-center justify-center gap-2 group">
                 Talk to Sales
                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </Link>
@@ -414,7 +414,7 @@ export default function LandingPage() {
             <Link href="/terms-of-service" className="hover:text-slate-300 hover:underline transition-all">Terms of Service</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Security</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Status</Link>
-            <Link href="/contact" className="hover:text-slate-300 hover:underline transition-all">Contact</Link>
+            <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Contact</Link>
           </nav>
           <div className="flex gap-6 items-center">
             <Link href="#" className="text-slate-500 hover:text-blue-400 transition-colors">
