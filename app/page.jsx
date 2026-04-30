@@ -410,8 +410,8 @@ export default function LandingPage() {
             </div>
           </div>
           <nav className="flex flex-wrap gap-8 font-['Inter'] text-xs text-slate-500 uppercase tracking-widest font-semibold">
-            <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Privacy Policy</Link>
-            <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Terms of Service</Link>
+            <Link href="/privacy-policy" className="hover:text-slate-300 hover:underline transition-all">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="hover:text-slate-300 hover:underline transition-all">Terms of Service</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Security</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Status</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Contact</Link>
