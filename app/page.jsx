@@ -12,8 +12,8 @@ export default function LandingPage() {
           </div>
           <div className="hidden md:flex items-center gap-8 font-['Inter'] text-sm font-medium tracking-tight">
             <Link href="#" className="text-blue-400 font-semibold transition-all duration-300">Features</Link>
-            <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Solutions</Link>
-            <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Resources</Link>
+            <Link href="/solutions" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Solutions</Link>
+            <Link href="/resources" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Resources</Link>
             <Link href="/pricing" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Pricing</Link>
           </div>
           <div className="flex items-center gap-4">

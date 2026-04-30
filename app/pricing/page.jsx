@@ -11,17 +11,17 @@ export default function PricingPage() {
           </Link>
           <div className="hidden md:flex items-center gap-8 font-['Inter'] text-sm font-medium tracking-tight">
             <Link href="/" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Features</Link>
-            <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Solutions</Link>
-            <Link href="#" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Resources</Link>
+            <Link href="/solutions" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Solutions</Link>
+            <Link href="/resources" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Resources</Link>
             <Link href="/pricing" className="text-blue-400 font-semibold transition-all duration-300">Pricing</Link>
           </div>
           <div className="flex items-center gap-4">
-            <button className="hidden sm:block text-slate-400 hover:text-slate-100 font-medium text-sm px-4 py-2 transition-all">
+            <Link href="/login" className="hidden sm:block text-slate-400 hover:text-slate-100 font-medium text-sm px-4 py-2 transition-all">
               Sign In
-            </button>
-            <button className="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2.5 rounded-lg text-sm font-bold active:scale-95 duration-200 transition-all shadow-lg shadow-primary/20">
+            </Link>
+            <Link href="/signup" className="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2.5 rounded-lg text-sm font-bold active:scale-95 duration-200 transition-all shadow-lg shadow-primary/20">
               Get Started
-            </button>
+            </Link>
           </div>
         </div>
         <div className="bg-gradient-to-b from-[#112036] to-transparent h-[1px] opacity-20"></div>
@@ -63,9 +63,9 @@ export default function PricingPage() {
                     Community support
                   </li>
                 </ul>
-                <button className="w-full py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all">
+                <Link href="/signup" className="w-full py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all block text-center">
                   Get Started
-                </button>
+                </Link>
               </div>
 
               {/* Pro Plan */}
@@ -99,9 +99,9 @@ export default function PricingPage() {
                     Custom themes
                   </li>
                 </ul>
-                <button className="w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all">
+                <Link href="/signup" className="w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all block text-center">
                   Get Started
-                </button>
+                </Link>
               </div>
 
               {/* Enterprise Plan */}
@@ -131,9 +131,9 @@ export default function PricingPage() {
                     White-labeling
                   </li>
                 </ul>
-                <button className="w-full py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all">
+                <Link href="/signup" className="w-full py-4 rounded-xl border border-outline-variant/30 text-on-surface font-bold hover:bg-white/5 transition-all block text-center">
                   Contact Sales
-                </button>
+                </Link>
               </div>
             </div>
 
