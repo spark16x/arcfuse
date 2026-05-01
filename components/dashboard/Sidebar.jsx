@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { mockUser } from "@/lib/mock-data";
-import { LayoutDashboard, Cable, ActivitySquare, MessageSquare, Settings } from "lucide-react";
+import { LayoutDashboard, Cable, ActivitySquare, MessageSquare, Settings, LogOut } from "lucide-react";
 
 export function Sidebar({ className }) {
   const navItems = [
@@ -39,7 +39,7 @@ export function Sidebar({ className }) {
         ))}
       </nav>
 
-      <div className="mt-auto pt-4 border-t border-border">
+      <div className="mt-auto pt-4 border-t border-border flex flex-col gap-2">
         <div className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer">
           <img src={mockUser.avatar} alt="Avatar" className="w-10 h-10 rounded-full bg-surface-variant" />
           <div className="flex-1 min-w-0">
@@ -50,6 +50,12 @@ export function Sidebar({ className }) {
             </p>
           </div>
         </div>
+        <form action="/auth/logout" method="post">
+          <button className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface">
+            <LogOut className="w-5 h-5" />
+            Sign Out
+          </button>
+        </form>
       </div>
     </aside>
   );

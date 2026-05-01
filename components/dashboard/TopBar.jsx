@@ -1,4 +1,4 @@
-import { Search, Bell, Plus } from "lucide-react";
+import { Search, Bell, Plus, LogOut } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -25,6 +25,11 @@ export function TopBar() {
           <Plus className="w-4 h-4" />
           Add Integration
         </Button>
+        <form action="/auth/logout" method="post" className="md:hidden">
+          <Button variant="ghost" size="icon" className="text-on-surface-variant hover:text-on-surface relative rounded-full">
+            <LogOut className="w-5 h-5" />
+          </Button>
+        </form>
       </div>
     </header>
   );
