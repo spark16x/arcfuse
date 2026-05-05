@@ -15,8 +15,31 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { login, loginWithGithub } from "@/app/login/actions"
+import { login, loginWithGithub, loginWithDiscord } from "@/app/login/actions"
 import { Github } from "lucide-react"
+
+
+function Discord(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="9" cy="12" r="1" />
+      <circle cx="15" cy="12" r="1" />
+      <path d="M7.5 16.5c3.5 1 5.5 1 9 0" />
+      <path d="M7 3.338A9.954 9.954 0 0 1 12 2c2.69 0 5.132 1.048 6.96 2.766M5.845 5.845A9.946 9.946 0 0 0 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-1.879-.517-3.636-1.408-5.115" />
+    </svg>
+  )
+}
 
 export function LoginForm({
   className,
@@ -32,12 +55,20 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={loginWithGithub} className="mb-4">
-            <Button variant="outline" type="submit" className="w-full">
-              <Github className="mr-2 h-4 w-4" />
-              Login with GitHub
-            </Button>
-          </form>
+          <div className="flex flex-col gap-4 mb-4">
+            <form action={loginWithGithub}>
+              <Button variant="outline" type="submit" className="w-full">
+                <Github className="mr-2 h-4 w-4" />
+                Login with GitHub
+              </Button>
+            </form>
+            <form action={loginWithDiscord}>
+              <Button variant="outline" type="submit" className="w-full">
+                <Discord className="mr-2 h-4 w-4" />
+                Login with Discord
+              </Button>
+            </form>
+          </div>
           <FieldSeparator>Or continue with</FieldSeparator>
           <form action={login} className="mt-4">
             <FieldGroup>
