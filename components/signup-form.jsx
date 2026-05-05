@@ -15,7 +15,8 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { signup } from "@/app/login/actions"
+import { signup, loginWithGithub } from "@/app/login/actions"
+import { Github } from "lucide-react"
 
 export function SignupForm({
   className,
@@ -31,7 +32,14 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={signup}>
+          <form action={loginWithGithub} className="mb-4">
+            <Button variant="outline" type="submit" className="w-full">
+              <Github className="mr-2 h-4 w-4" />
+              Sign up with GitHub
+            </Button>
+          </form>
+          <FieldSeparator>Or continue with</FieldSeparator>
+          <form action={signup} className="mt-4">
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="name">Full Name</FieldLabel>

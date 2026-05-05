@@ -44,3 +44,23 @@ export async function signup(formData) {
   revalidatePath('/', 'layout')
   redirect('/dashboard')
 }
+
+export async function loginWithGithub() {
+  const supabase = await createClient()
+
+  // We use headers to get the origin for redirect URL
+  const { headers } = await import('next/headers')
+  const headersList = await headers()
+  const origin = headersList.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: `${origin}/auth/callback`,
+    },
+  })
+
+  if (data.url) {
+    redirect(data.url)
+  }
+}
