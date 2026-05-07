@@ -37,14 +37,23 @@ export async function updateSession(request) {
 
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/signup') &&
-    !request.nextUrl.pathname.startsWith('/auth')
+    request.nextUrl.pathname.startsWith('/dashboard')
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()
     url.pathname = '/login'
-    return NextResponse.redirect(url)
+
+    // IMPORTANT: If you are returning a different response (like a redirect),
+    // you must copy over the cookies to the new response!
+    const newResponse = NextResponse.redirect(url)
+
+    // Copy the cookies from the original response (which has our updated session info)
+    const cookies = supabaseResponse.cookies.getAll()
+    cookies.forEach(({ name, value, options }) => {
+      newResponse.cookies.set(name, value, options)
+    })
+
+    return newResponse
   }
 
   return supabaseResponse
