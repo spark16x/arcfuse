@@ -17,7 +17,6 @@ export default function ResourcesPage() {
             <Link href="/#features" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Features</Link>
             <Link href="/solutions" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Solutions</Link>
             <Link href="/resources" className="text-blue-400 font-semibold transition-all duration-300">Resources</Link>
-            <Link href="/pricing" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Pricing</Link>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login" className="hidden sm:block text-slate-400 hover:text-slate-100 font-medium text-sm px-4 py-2 transition-all">
