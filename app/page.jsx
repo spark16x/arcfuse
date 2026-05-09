@@ -336,7 +336,7 @@ export default function LandingPage() {
             <Link href="/terms-of-service" className="hover:text-slate-300 hover:underline transition-all">Terms of Service</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Security</Link>
             <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Status</Link>
-            <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Contact</Link>
+            <Link href="/contact" className="hover:text-slate-300 hover:underline transition-all">Contact</Link>
           </nav>
           <div className="flex gap-6 items-center">
             <Link href="#" className="text-slate-500 hover:text-blue-400 transition-colors">
