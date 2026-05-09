@@ -1,71 +1,28 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { createClient } from "@/utils/supabase/client";
+import { activityTimeline } from "@/lib/mock-data";
 
 export function ActivityTimeline() {
-  const [timeline, setTimeline] = useState([]);
-  const supabase = createClient();
-
-  useEffect(() => {
-    const fetchTimeline = async () => {
-      const { data, error } = await supabase
-        .from("activity_timeline")
-        .select("*")
-        .order("id", { ascending: false });
-
-      if (data && !error) {
-        setTimeline(data);
-      }
-    };
-
-    fetchTimeline();
-
-    const channel = supabase
-      .channel("activity_timeline_changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "activity_timeline" },
-        (payload) => {
-          if (payload.eventType === "INSERT") {
-            setTimeline((current) => [payload.new, ...current]);
-          } else if (payload.eventType === "DELETE") {
-            setTimeline((current) => current.filter((item) => item.id !== payload.old.id));
-          } else if (payload.eventType === "UPDATE") {
-            setTimeline((current) =>
-              current.map((item) => (item.id === payload.new.id ? payload.new : item))
-            );
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [supabase]);
-
   return (
-    <Card className="bg-surface-container/30 border-border/50 h-full">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-bold">Activity Log</CardTitle>
-      </CardHeader>
-      <CardContent className="px-6 pb-6">
-        <div className="relative border-l-2 border-surface-container-high ml-3 space-y-6">
-          {timeline.map((item, i) => (
-            <div key={item.id} className="relative pl-6">
-              <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-surface-container-high border-2 border-background flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined text-[10px]">{item.icon}</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-sm font-medium text-on-surface">{item.action}</p>
-                <span className="text-xs text-on-surface-variant font-medium">{item.time}</span>
-              </div>
+    <div className="glass-panel-heavy rounded-3xl p-6 border border-glass-border">
+      <h3 className="text-lg font-bold text-foreground mb-6">Recent Events</h3>
+
+      <div className="space-y-6 relative before:absolute before:inset-0 before:ml-2.5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-primary/50 before:via-glass-border before:to-transparent">
+        {activityTimeline.slice(0, 4).map((activity, index) => (
+          <div key={activity.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+            {/* Timeline Dot */}
+            <div className="flex items-center justify-center w-5 h-5 rounded-full border-2 border-primary bg-surface-100 shadow-glow-primary shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:scale-125 transition-transform">
+                <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
             </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+
+            {/* Content Box */}
+            <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-xl bg-surface-100/50 border border-glass-border group-hover:border-primary/30 transition-colors">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-bold text-foreground truncate">{activity.action}</span>
+              </div>
+              <p className="text-[10px] text-muted-foreground">{activity.time}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

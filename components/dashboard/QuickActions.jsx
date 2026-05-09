@@ -1,29 +1,40 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { MessageSquarePlus, PenSquare, CheckSquare, RefreshCcw } from "lucide-react";
+import { PenSquare, Send, Zap } from "lucide-react";
 
 export function QuickActions() {
-  const actions = [
-    { label: "Send Message", icon: MessageSquarePlus, color: "text-blue-500", bg: "bg-blue-500/10 hover:bg-blue-500/20" },
-    { label: "Post Update", icon: PenSquare, color: "text-purple-500", bg: "bg-purple-500/10 hover:bg-purple-500/20" },
-    { label: "Create Task", icon: CheckSquare, color: "text-green-500", bg: "bg-green-500/10 hover:bg-green-500/20" },
-    { label: "Sync Apps", icon: RefreshCcw, color: "text-orange-500", bg: "bg-orange-500/10 hover:bg-orange-500/20" },
-  ];
-
   return (
-    <Card className="bg-surface-container/30 border-border/50">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-bold">Quick Actions</CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 pb-4">
-        <div className="grid grid-cols-2 gap-3">
-          {actions.map((action, i) => (
-            <button key={i} className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-border/30 transition-colors ${action.bg}`}>
-              <action.icon className={`w-5 h-5 ${action.color}`} />
-              <span className="text-xs font-medium text-on-surface">{action.label}</span>
-            </button>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <div className="glass-panel-heavy rounded-3xl p-6 border border-glass-border">
+      <h3 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
+        <Zap className="w-5 h-5 text-primary" />
+        Quick Actions
+      </h3>
+
+      <div className="grid grid-cols-2 gap-3">
+        <button className="flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-100 border border-glass-border hover:bg-primary/10 hover:border-primary/30 transition-all group">
+          <div className="w-10 h-10 rounded-full bg-surface-200 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+             <PenSquare className="w-5 h-5 text-primary" />
+          </div>
+          <span className="text-xs font-semibold text-foreground">Compose</span>
+        </button>
+
+        <button className="flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-100 border border-glass-border hover:bg-primary/10 hover:border-primary/30 transition-all group">
+          <div className="w-10 h-10 rounded-full bg-surface-200 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+             <Send className="w-5 h-5 text-primary" />
+          </div>
+          <span className="text-xs font-semibold text-foreground">Schedule</span>
+        </button>
+      </div>
+
+      {/* AI Smart Suggestion */}
+      <div className="mt-4 p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20">
+         <p className="text-xs font-medium text-primary mb-2 flex items-center gap-1">
+            <span className="material-symbols-outlined text-sm">auto_awesome</span>
+            AI Suggestion
+         </p>
+         <p className="text-sm text-foreground mb-3 leading-snug">"Best time to post on LinkedIn today is 2:00 PM EST."</p>
+         <button className="text-xs font-bold bg-primary text-black px-3 py-1.5 rounded-lg hover:bg-primary-hover w-full transition-colors">
+            Schedule Draft
+         </button>
+      </div>
+    </div>
   );
 }
