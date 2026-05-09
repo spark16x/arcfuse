@@ -1,85 +1,60 @@
-"use client";
+import { stats } from "@/lib/mock-data";
+import { ArrowUpRight, TrendingUp, Users, MessageCircle, Share2, Activity, Bell, Smartphone, Target } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Cable, BellRing, MonitorPlay, Zap } from "lucide-react";
-import { createClient } from "@/utils/supabase/client";
+const metrics = [
+  { label: "Connected Apps", value: stats.connectedApps, change: "+2", trend: "up", icon: Smartphone },
+  { label: "Alerts Today", value: stats.notificationsToday, change: "+12%", trend: "up", icon: Bell },
+  { label: "Active Sessions", value: stats.activeSessions, change: "Stable", trend: "up", icon: Activity },
+  { label: "Productivity", value: stats.productivityScore, change: "+5%", trend: "up", icon: Target },
+];
 
 export function OverviewCards() {
-  const [stats, setStats] = useState({
-    connectedApps: 0,
-    notificationsToday: 0,
-    activeSessions: 0,
-    productivityScore: 0,
-  });
-  const supabase = createClient();
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      const { data, error } = await supabase
-        .from("dashboard_stats")
-        .select("*")
-        .order("id", { ascending: false })
-        .limit(1)
-        .single();
-
-      if (data && !error) {
-        setStats({
-          connectedApps: data.connected_apps,
-          notificationsToday: data.notifications_today,
-          activeSessions: data.active_sessions,
-          productivityScore: data.productivity_score,
-        });
-      }
-    };
-
-    fetchStats();
-
-    const channel = supabase
-      .channel("dashboard_stats_changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "dashboard_stats" },
-        (payload) => {
-          if (payload.new) {
-            setStats({
-              connectedApps: payload.new.connected_apps,
-              notificationsToday: payload.new.notifications_today,
-              activeSessions: payload.new.active_sessions,
-              productivityScore: payload.new.productivity_score,
-            });
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [supabase]);
-
-  const items = [
-    { label: "Connected Apps", value: stats.connectedApps, icon: Cable, color: "text-blue-500", bg: "bg-blue-500/10" },
-    { label: "Notifications Today", value: stats.notificationsToday, icon: BellRing, color: "text-purple-500", bg: "bg-purple-500/10" },
-    { label: "Active Sessions", value: stats.activeSessions, icon: MonitorPlay, color: "text-green-500", bg: "bg-green-500/10" },
-    { label: "Productivity Score", value: `${stats.productivityScore}%`, icon: Zap, color: "text-orange-500", bg: "bg-orange-500/10" },
-  ];
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {items.map((item, i) => (
-        <Card key={i} className="bg-surface-container/50 border-border/50 hover:bg-surface-container transition-colors">
-          <CardContent className="p-6 flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${item.bg}`}>
-              <item.icon className={`w-6 h-6 ${item.color}`} />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {metrics.map((metric, index) => {
+        const isPositive = metric.trend === "up";
+        const Icon = metric.icon || TrendingUp;
+
+        return (
+          <div
+            key={metric.label}
+            className="group glass-panel rounded-2xl p-6 relative overflow-hidden transition-all hover:-translate-y-1 hover:shadow-soft hover:border-primary/30"
+          >
+            {/* Subtle background glow on hover */}
+            <div className="absolute -inset-px bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl -z-10 blur-xl"></div>
+
+            <div className="flex items-start justify-between mb-4">
+              <div className="w-10 h-10 rounded-xl bg-surface-200 border border-glass-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors">
+                <Icon className="w-5 h-5" />
+              </div>
+              <div
+                className={cn(
+                  "flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-md border",
+                  isPositive
+                    ? "text-green-400 bg-green-400/10 border-green-400/20"
+                    : "text-red-400 bg-red-400/10 border-red-400/20"
+                )}
+              >
+                {isPositive && <ArrowUpRight className="w-3 h-3" />}
+                {metric.change}
+              </div>
             </div>
+
             <div>
-              <p className="text-sm font-medium text-on-surface-variant">{item.label}</p>
-              <h3 className="text-2xl font-bold text-on-surface">{item.value}</h3>
+              <p className="text-3xl font-black tracking-tight text-foreground mb-1 group-hover:glow-text transition-all duration-300">
+                {metric.value}
+              </p>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                {metric.label}
+              </h3>
             </div>
-          </CardContent>
-        </Card>
-      ))}
+
+            {/* Decorative bottom line */}
+            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+        );
+      })}
     </div>
   );
 }

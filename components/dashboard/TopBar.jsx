@@ -1,35 +1,28 @@
-import { Search, Bell, Plus, LogOut } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Bell, Search } from "lucide-react";
+import { mockUser } from "@/lib/mock-data";
 
 export function TopBar() {
   return (
-    <header className="h-16 border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-6">
-      <div className="flex-1 flex items-center">
-        <div className="relative w-full max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
-          <Input
-            type="search"
-            placeholder="Search across apps... (Cmd+K)"
-            className="w-full pl-10 bg-surface-container-low border-none focus-visible:ring-1 focus-visible:ring-primary/50 text-sm"
-          />
-        </div>
+    <header className="h-16 border-b border-glass-border glass-panel shrink-0 flex items-center justify-between px-4 md:px-8 z-30 sticky top-0">
+      <div className="flex items-center gap-4 flex-1">
+        {/* Mobile menu button would go here */}
       </div>
 
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="text-on-surface-variant hover:text-on-surface relative rounded-full">
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
-        </Button>
-        <Button className="gap-2 rounded-full shadow-lg shadow-primary/20">
-          <Plus className="w-4 h-4" />
-          Add Integration
-        </Button>
-        <form action="/auth/logout" method="post" className="md:hidden">
-          <Button variant="ghost" size="icon" className="text-on-surface-variant hover:text-on-surface relative rounded-full">
-            <LogOut className="w-5 h-5" />
-          </Button>
-        </form>
+        <button className="w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-200 hover:text-foreground transition-all relative group">
+          <Bell className="w-5 h-5 group-hover:animate-pulse-glow" />
+          <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary shadow-glow-primary border-2 border-surface-100"></span>
+        </button>
+
+        <div className="h-6 w-px bg-glass-border mx-1"></div>
+
+        <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <div className="text-right hidden sm:block">
+            <p className="text-sm font-semibold text-foreground leading-none mb-1">{mockUser.name}</p>
+            <p className="text-[10px] text-primary uppercase tracking-wider font-bold">Workspace Admin</p>
+          </div>
+          <img src={mockUser.avatar} alt="Avatar" className="w-8 h-8 rounded-full border border-glass-border" />
+        </button>
       </div>
     </header>
   );
