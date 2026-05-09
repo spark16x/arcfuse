@@ -9,6 +9,17 @@ export default function Contact() {
           We&apos;d love to hear from you. Please fill out the form below or reach out to us directly.
         </p>
 
+        <div className="mb-10 text-on-surface-variant flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary">call</span>
+            <a href="tel:+917982750957" className="hover:text-primary transition-colors">7982750957</a>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary">mail</span>
+            <a href="mailto:arcfuse.dev@gmail.com" className="hover:text-primary transition-colors">arcfuse.dev@gmail.com</a>
+          </div>
+        </div>
+
         <form className="flex flex-col gap-6 max-w-lg">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-on-surface mb-2">Name</label>
