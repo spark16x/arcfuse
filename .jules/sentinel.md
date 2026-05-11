@@ -1,0 +1,4 @@
+## 2024-05-11 - Open Redirect via Supabase Auth Callback
+**Vulnerability:** The application is vulnerable to an Open Redirect via the `next` parameter in the `/auth/callback` route. The `next` parameter was not properly sanitized. By crafting a URL like `https://example.com/auth/callback?code=123&next=//attacker.com` or `next=@attacker.com`, an attacker could redirect the user to a malicious site.
+**Learning:** Concatenating an unvalidated string (like a URL parameter) to an `origin` can be dangerous due to URL parsing rules. `https://example.com@attacker.com` evaluates to `attacker.com` with username `example.com`.
+**Prevention:** Always sanitize paths before appending them to origin. Ensure the path strictly starts with a single `/`. We can use regex like `.replace(/^\/+/, '/')` to prevent protocol-relative bypasses.
