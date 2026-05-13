@@ -42,6 +42,7 @@ export function UnifiedFeed() {
         {unifiedFeed.map((activity, index) => {
           const PlatformIcon = platformIcons[activity.platform] || MessageSquare;
           const platformStyle = platformColors[activity.platform] || "text-muted-foreground bg-surface-200";
+          const stableIdHash = Math.abs(String(activity.id).split('').reduce((a, b) => a + b.charCodeAt(0), 0));
 
           return (
             <div
@@ -73,17 +74,18 @@ export function UnifiedFeed() {
                   </p>
 
                   <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground mt-4 pt-4 border-t border-glass-border">
+                    {/* Optimization: Used deterministic values based on ID instead of Math.random() to prevent hydration errors and UI jitter */}
                     <button className="flex items-center gap-1.5 hover:text-primary transition-colors">
                       <Heart className="w-4 h-4" />
-                      <span>{Math.floor(Math.random() * 20)}</span>
+                      <span>{(stableIdHash * 7) % 20}</span>
                     </button>
                     <button className="flex items-center gap-1.5 hover:text-primary transition-colors">
                       <MessageSquare className="w-4 h-4" />
-                      <span>{Math.floor(Math.random() * 5)}</span>
+                      <span>{(stableIdHash * 3) % 5}</span>
                     </button>
                     <button className="flex items-center gap-1.5 hover:text-primary transition-colors">
                       <Repeat2 className="w-4 h-4" />
-                      <span>{Math.floor(Math.random() * 10)}</span>
+                      <span>{(stableIdHash * 5) % 10}</span>
                     </button>
                     <button className="ml-auto opacity-0 group-hover:opacity-100 flex items-center gap-1 hover:text-foreground transition-all">
                       Open <ExternalLink className="w-3 h-3" />
