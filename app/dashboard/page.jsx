@@ -26,7 +26,7 @@ export default function DashboardPage() {
                   Welcome back, {mockUser.name} <span className="animate-float inline-block">✨</span>
                 </h1>
                 <p className="text-muted-foreground text-lg">
-                  Here's what's happening across your connected platforms today.
+                  Here&apos;s what&apos;s happening across your connected platforms today.
                 </p>
               </div>
               <div className="flex items-center gap-3">

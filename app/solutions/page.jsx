@@ -36,7 +36,7 @@ export default function SolutionsPage() {
           Solutions for Every Workflow
         </h1>
         <p className="text-on-surface-variant text-lg mb-12">
-          Whether you're a community manager, developer, or marketer, Arcfuse streamlines your social operations.
+          Whether you&apos;re a community manager, developer, or marketer, Arcfuse streamlines your social operations.
         </p>
       </div>
 
