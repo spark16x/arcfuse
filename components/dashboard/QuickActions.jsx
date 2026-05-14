@@ -30,7 +30,7 @@ export function QuickActions() {
             <span className="material-symbols-outlined text-sm">auto_awesome</span>
             AI Suggestion
          </p>
-         <p className="text-sm text-foreground mb-3 leading-snug">"Best time to post on LinkedIn today is 2:00 PM EST."</p>
+         <p className="text-sm text-foreground mb-3 leading-snug">&quot;Best time to post on LinkedIn today is 2:00 PM EST.&quot;</p>
          <button className="text-xs font-bold bg-primary text-black px-3 py-1.5 rounded-lg hover:bg-primary-hover w-full transition-colors">
             Schedule Draft
          </button>
