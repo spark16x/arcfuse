@@ -16,12 +16,12 @@ export default function LandingPage() {
             <Link href="/resources" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Resources</Link>
           </div>
           <div className="flex items-center gap-4">
-            <button className="hidden sm:block text-slate-400 hover:text-slate-100 font-medium text-sm px-4 py-2 transition-all">
+            <Link href="/login" className="hidden sm:block text-slate-400 hover:text-slate-100 font-medium text-sm px-4 py-2 transition-all">
               Sign In
-            </button>
-            <button className="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2.5 rounded-lg text-sm font-bold active:scale-95 duration-200 transition-all shadow-lg shadow-primary/20">
+            </Link>
+            <Link href="/signup" className="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2.5 rounded-lg text-sm font-bold active:scale-95 duration-200 transition-all shadow-lg shadow-primary/20">
               Get Started
-            </button>
+            </Link>
           </div>
         </div>
         <div className="bg-gradient-to-b from-[#112036] to-transparent h-[1px] opacity-20"></div>
@@ -49,9 +49,9 @@ export default function LandingPage() {
               Stop tab-switching. Manage Discord, X, Slack, and more through a high-performance command center designed for modern workflows.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <button className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl text-base font-bold shadow-xl shadow-primary/25 active:scale-95 transition-all">
+              <Link href="/signup" className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl text-base font-bold shadow-xl shadow-primary/25 active:scale-95 transition-all inline-flex items-center justify-center">
                 Get Started Free
-              </button>
+              </Link>
               <button className="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold border border-outline-variant/30 text-primary hover:bg-surface-container transition-all flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined">play_circle</span>
                 View Demo
@@ -299,9 +299,9 @@ export default function LandingPage() {
               Join 10,000+ professionals who have unified their social digital workflow. No credit card required to start.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <button className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-primary/30 active:scale-95 transition-all">
+              <Link href="/signup" className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-primary/30 active:scale-95 transition-all inline-flex items-center justify-center">
                 Sign Up Now
-              </button>
+              </Link>
               <Link href="#" className="text-on-surface font-semibold flex items-center justify-center gap-2 group">
                 Talk to Sales
                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>

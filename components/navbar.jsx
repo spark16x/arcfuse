@@ -47,12 +47,12 @@ export function Navbar() {
               </Button>
             )}
             <div className="hidden sm:flex gap-2">
-              <Link href="/login" passHref>
-                <Button variant="ghost">Log in</Button>
-              </Link>
-              <Link href="/signup" passHref>
-                <Button>Sign up</Button>
-              </Link>
+              <Button variant="ghost" asChild>
+                <Link href="/login">Log in</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/signup">Sign up</Link>
+              </Button>
             </div>
           </div>
         </div>
