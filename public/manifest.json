@@ -2,7 +2,7 @@
   "name": "Arcfuse",
   "short_name": "Arcfuse",
   "description": "Unify all your social platforms in one space.",
-  "start_url": "/",
+  "start_url": "/?pwa=true",
   "display": "standalone",
   "background_color": "#00a0ff",
   "theme_color": "#007BFF",
