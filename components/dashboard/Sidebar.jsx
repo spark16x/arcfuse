@@ -12,7 +12,7 @@ import {
   Search
 } from "lucide-react";
 
-export function Sidebar({ className }) {
+export function Sidebar({ className, isMobile }) {
   const navItems = [
     { label: "Overview", href: "/dashboard", icon: LayoutDashboard, active: true },
     { label: "Integrations", href: "#", icon: Cable, active: false },

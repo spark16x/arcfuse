@@ -1,11 +1,25 @@
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sidebar } from "@/components/dashboard/Sidebar";
+
 import { mockUser } from "@/lib/mock-data";
 
 export function TopBar() {
   return (
     <header className="h-16 border-b border-glass-border glass-panel shrink-0 flex items-center justify-between px-4 md:px-8 z-30 sticky top-0">
       <div className="flex items-center gap-4 flex-1">
-        {/* Mobile menu button would go here */}
+
+        {/* Mobile menu button */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <button className="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-200 hover:text-foreground transition-all">
+              <Menu className="w-5 h-5" />
+            </button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 w-72 border-r-glass-border">
+            <Sidebar className="w-full border-r-0 h-full" isMobile={true} />
+          </SheetContent>
+        </Sheet>
       </div>
 
       <div className="flex items-center gap-4">
