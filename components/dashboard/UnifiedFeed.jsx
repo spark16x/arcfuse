@@ -1,5 +1,4 @@
 import { unifiedFeed } from "@/lib/mock-data";
-import { formatDistanceToNow } from "date-fns";
 import { Twitter, Linkedin, Github, MessageSquare, Heart, Repeat2, ExternalLink, Slack, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
