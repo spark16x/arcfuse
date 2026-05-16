@@ -7,7 +7,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node --experimental-test-module-mocks --test utils/supabase/*.test.js"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.7",
