@@ -74,19 +74,31 @@ export function UnifiedFeed() {
 
                   <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground mt-4 pt-4 border-t border-glass-border">
                     {/* Optimization: Used deterministic values based on ID instead of Math.random() to prevent hydration errors and UI jitter */}
-                    <button className="flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <button
+                      className="flex items-center gap-1.5 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1 py-0.5"
+                      aria-label={`Like from ${activity.user}`}
+                    >
                       <Heart className="w-4 h-4" />
                       <span>{(stableIdHash * 7) % 20}</span>
                     </button>
-                    <button className="flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <button
+                      className="flex items-center gap-1.5 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1 py-0.5"
+                      aria-label={`Comment on post from ${activity.user}`}
+                    >
                       <MessageSquare className="w-4 h-4" />
                       <span>{(stableIdHash * 3) % 5}</span>
                     </button>
-                    <button className="flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <button
+                      className="flex items-center gap-1.5 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1 py-0.5"
+                      aria-label={`Repost post from ${activity.user}`}
+                    >
                       <Repeat2 className="w-4 h-4" />
                       <span>{(stableIdHash * 5) % 10}</span>
                     </button>
-                    <button className="ml-auto opacity-0 group-hover:opacity-100 flex items-center gap-1 hover:text-foreground transition-all">
+                    <button
+                      className="ml-auto opacity-0 group-hover:opacity-100 focus-visible:opacity-100 flex items-center gap-1 hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-2 py-0.5"
+                      aria-label={`Open post from ${activity.user}`}
+                    >
                       Open <ExternalLink className="w-3 h-3" />
                     </button>
                   </div>
