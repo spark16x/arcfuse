@@ -10,7 +10,10 @@ export async function GET(request) {
 
   // Sanitize next to prevent open redirect vulnerabilities
   // Ensure it starts with a single slash and prevents protocol-relative URLs (e.g. //attacker.com)
-  const safeNext = next.startsWith('/') ? next.replace(/^\/+/, '/') : '/' + next
+  const safeNext = (next || '/').replace(/^[/\\]+/, '/')
+
+  // Ensure the path actually starts with a slash after stripping (in case next was empty)
+  const finalSafeNext = safeNext.startsWith('/') ? safeNext : '/' + safeNext
 
   if (code) {
     const supabase = await createClient()
@@ -20,11 +23,11 @@ export async function GET(request) {
       const isLocalEnv = process.env.NODE_ENV === 'development'
       if (isLocalEnv) {
         // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
-        return NextResponse.redirect(`${origin}${safeNext}`)
+        return NextResponse.redirect(`${origin}${finalSafeNext}`)
       } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${safeNext}`)
+        return NextResponse.redirect(`https://${forwardedHost}${finalSafeNext}`)
       } else {
-        return NextResponse.redirect(`${origin}${safeNext}`)
+        return NextResponse.redirect(`${origin}${finalSafeNext}`)
       }
     }
   }
