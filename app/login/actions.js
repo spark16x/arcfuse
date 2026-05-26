@@ -5,15 +5,33 @@ import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 
+// Simple validation to ensure inputs are strings and within reasonable length bounds
+function validateAuthInputs(email, password, isLogin = false) {
+  if (typeof email !== 'string' || typeof password !== 'string') {
+    return false;
+  }
+  if (email.length < 3 || email.length > 254) {
+    return false;
+  }
+  // Enforce min length only on signup to avoid locking out existing users
+  // with legacy passwords that might be shorter.
+  if (password.length > 128 || (!isLogin && password.length < 8)) {
+    return false;
+  }
+  return true;
+}
+
 export async function login(formData) {
   const supabase = await createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email'),
-    password: formData.get('password'),
+  const email = formData.get('email')
+  const password = formData.get('password')
+
+  if (!validateAuthInputs(email, password, true)) {
+    redirect('/login?error=Invalid input provided')
   }
+
+  const data = { email, password }
 
   const { error } = await supabase.auth.signInWithPassword(data)
 
@@ -28,12 +46,14 @@ export async function login(formData) {
 export async function signup(formData) {
   const supabase = await createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email'),
-    password: formData.get('password'),
+  const email = formData.get('email')
+  const password = formData.get('password')
+
+  if (!validateAuthInputs(email, password, false)) {
+    redirect('/signup?error=Invalid input provided')
   }
+
+  const data = { email, password }
 
   const { error } = await supabase.auth.signUp(data)
 
