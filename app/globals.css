@@ -4,33 +4,35 @@
 
 @layer base {
   :root {
-    --background: #000000;
-    --foreground: #FAFAFA;
-    --primary: 189 100% 50%; /* #00E5FF */
-    --primary-foreground: #000000;
+    --background: #FFFFFF;
+    --foreground: #111827;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 189 100% 50%;
+    --primary: 238 78% 60%; /* #4F46E5 */
+    --primary-foreground: 0 0% 100%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 39% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 39% 11%;
+    --secondary: 226 100% 97%; /* #EEF2FF */
+    --secondary-foreground: 238 78% 60%; /* #4F46E5 */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 226 100% 97%; /* #EEF2FF */
+    --accent-foreground: 238 78% 60%; /* #4F46E5 */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 13% 91%; /* #E5E7EB */
+    --input: 220 13% 91%; /* #E5E7EB */
+    --ring: 238 78% 60%; /* #4F46E5 */
   }
 
   .dark {
+    /* Retaining dark mode structure but the prompt focuses on light theme foundation */
     --background: #000000;
     --foreground: #FAFAFA;
-    --primary: 189 100% 50%;
-    --primary-foreground: #000000;
+    --primary: 238 78% 60%;
+    --primary-foreground: #FFFFFF;
 
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -46,7 +48,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
-    --ring: 189 100% 50%;
+    --ring: 238 78% 60%;
   }
 }
 
@@ -57,10 +59,7 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
-    /* Subtle radial gradient background common in modern SaaS */
-    background-image: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.05) 0%, transparent 50%),
-                      radial-gradient(circle at 0% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
-    background-attachment: fixed;
+    /* Clean white background, no gradients for open-source feel */
   }
 }
 
@@ -68,26 +67,33 @@
   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
 }
 
-/* Premium Glassmorphism Utility */
-.glass-panel {
-  background: rgba(18, 18, 18, 0.6);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+/* Glass Navigation Utility */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #E5E7EB;
 }
 
-.glass-panel-heavy {
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Repository-inspired Cards */
+.repo-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
 }
 
-/* Custom Scrollbar for Dashboard - Premium thin scrollbar */
+.repo-card:hover {
+  border-color: #4F46E5;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -95,32 +101,45 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: #D1D5DB;
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #9CA3AF;
 }
 
-/* Glow effects */
-.glow-text {
-  text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+/* Clean Button utilities */
+.btn-primary {
+  background-color: #4F46E5;
+  color: #FFFFFF;
+  transition: all 150ms ease;
 }
 
-.glow-border {
-  position: relative;
+.btn-primary:hover {
+  background-color: #4338CA;
+  transform: translateY(-2px);
 }
 
-.glow-border::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(to bottom, rgba(0, 229, 255, 0.3), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+.btn-secondary {
+  background-color: #EEF2FF;
+  color: #4F46E5;
+  transition: all 150ms ease;
+}
+
+.btn-secondary:hover {
+  background-color: #E0E7FF;
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: #6B7280;
+  transition: all 150ms ease;
+}
+
+.btn-ghost:hover {
+  background-color: #F3F4F6;
+  color: #111827;
+  transform: translateY(-2px);
 }

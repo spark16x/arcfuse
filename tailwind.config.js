@@ -13,90 +13,98 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1280px",
       },
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "#000000", // Deep black background for premium feel
-        foreground: "#FAFAFA",
+        border: "#E5E7EB",
+        input: "#E5E7EB",
+        ring: "#4F46E5",
+        background: "#FFFFFF",
+        foreground: "#111827",
 
-        // Brand/Accent (Cyan Blue / Electric Blue)
-        primary: "#00E5FF",
-        "primary-hover": "#00B8D4",
-        "primary-glow": "rgba(0, 229, 255, 0.5)",
+        primary: {
+          DEFAULT: "#4F46E5",
+          hover: "#4338CA",
+          soft: "#EEF2FF",
+          foreground: "#FFFFFF",
+        },
+        secondary: {
+          DEFAULT: "#EEF2FF",
+          foreground: "#4F46E5",
+        },
+        success: "#10B981",
+        warning: "#F59E0B",
 
-        // Surfaces (Layered, glassmorphic dark navy/grays)
-        "surface-100": "#0A0A0A", // Very dark grey/navy
-        "surface-200": "#121212",
-        "surface-300": "#1E1E1E",
-        "surface-400": "#2C2C2C",
+        "section-bg": "#F8FAFC",
+        "card-bg": "#FFFFFF",
+        "code-bg": "#F3F4F6",
 
-        "glass-100": "rgba(255, 255, 255, 0.03)",
-        "glass-200": "rgba(255, 255, 255, 0.05)",
-        "glass-300": "rgba(255, 255, 255, 0.08)",
-        "glass-border": "rgba(255, 255, 255, 0.1)",
+        "text-primary": "#111827",
+        "text-secondary": "#6B7280",
+        "text-muted": "#9CA3AF",
 
-        // Retaining essential mapped colors to avoid breaking existing generic classes
-        "surface-container-lowest": "#000000",
-        "surface-dim": "#0A0A0A",
-        "surface": "#121212",
-        "surface-bright": "#1E1E1E",
-        "surface-variant": "#2C2C2C",
-        "on-surface": "#FAFAFA",
-        "on-surface-variant": "#A1A1AA",
-        "outline": "rgba(255, 255, 255, 0.1)",
-        "outline-variant": "rgba(255, 255, 255, 0.05)",
-
+        // Retaining generic variables for compatibility with existing shadcn/ui components if any
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "#27272A",
-          foreground: "#A1A1AA",
+          DEFAULT: "#F3F4F6",
+          foreground: "#9CA3AF",
         },
         accent: {
-          DEFAULT: "rgba(0, 229, 255, 0.1)",
-          foreground: "#00E5FF",
+          DEFAULT: "#EEF2FF",
+          foreground: "#4F46E5",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "#FFFFFF",
+          foreground: "#111827",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "#FFFFFF",
+          foreground: "#111827",
         },
+
+        // Retaining essential mapped colors to avoid breaking existing generic classes
+        "surface-container-lowest": "#FFFFFF",
+        "surface-dim": "#F8FAFC",
+        "surface": "#FFFFFF",
+        "surface-bright": "#FFFFFF",
+        "surface-variant": "#F3F4F6",
+        "on-surface": "#111827",
+        "on-surface-variant": "#6B7280",
+        "outline": "#E5E7EB",
+        "outline-variant": "#E5E7EB",
+        "primary-container": "#EEF2FF",
+        "on-primary-container": "#4F46E5",
+        "on-primary": "#FFFFFF",
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #00000000 0deg, #00E5FF20 180deg, #00000000 360deg)',
-        'glass-gradient': 'linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)',
+      spacing: {
+        'section-desktop': '96px',
+        'section-tablet': '72px',
+        'section-mobile': '56px',
+      },
+      maxWidth: {
+        'content': '720px',
+        'container-main': '1280px',
       },
       boxShadow: {
-        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
-        'glass-inset': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.05)',
-        'glow-primary': '0 0 20px rgba(0, 229, 255, 0.3)',
-        'glow-primary-lg': '0 0 40px rgba(0, 229, 255, 0.2)',
-        'soft': '0 10px 40px -10px rgba(0,0,0,0.5)',
+        'card': '0 2px 10px rgba(0, 0, 0, 0.05)',
+        'card-hover': '0 8px 30px rgba(0, 0, 0, 0.1)',
       },
       borderRadius: {
-        lg: "0.75rem",
-        md: "calc(0.75rem - 2px)",
-        sm: "calc(0.75rem - 4px)",
-        xl: "1rem",
-        '2xl': "1.5rem",
-        '3xl': "2rem",
-        full: "9999px"
+        'card': '20px',
       },
       fontFamily: {
-        headline: ["Inter", "sans-serif"],
-        body: ["Inter", "sans-serif"],
-        label: ["Inter", "sans-serif"]
+        sans: ["Geist", "Inter", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
+      },
+      fontSize: {
+        'display-mobile': ['36px', { lineHeight: '1.2', letterSpacing: '-0.04em', fontWeight: '700' }],
+        'display-tablet': ['44px', { lineHeight: '1.2', letterSpacing: '-0.04em', fontWeight: '700' }],
+        'display-desktop': ['56px', { lineHeight: '1.2', letterSpacing: '-0.04em', fontWeight: '700' }],
       },
       keyframes: {
         "accordion-down": {
@@ -111,16 +119,11 @@ const config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
-        "pulse-glow": {
-          "0%, 100%": { opacity: 1 },
-          "50%": { opacity: 0.5 },
-        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "float": "float 6s ease-in-out infinite",
-        "pulse-glow": "pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },
