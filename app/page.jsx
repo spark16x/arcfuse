@@ -1,357 +1,435 @@
-import Link from "next/link";
-import Image from "next/image";
+"use client";
 
-export default function LandingPage() {
+import { useEffect } from 'react';
+import Link from 'next/link';
+
+export default function Home() {
+  useEffect(() => {
+    function reveal() {
+      var reveals = document.querySelectorAll(".reveal");
+      for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 150;
+        if (elementTop < windowHeight - elementVisible) {
+          reveals[i].classList.add("active");
+        }
+      }
+    }
+    window.addEventListener("scroll", reveal);
+    reveal();
+
+    const handleScroll = () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('py-2', 'shadow-sm');
+        header.classList.remove('py-4');
+      } else {
+        header.classList.remove('py-2', 'shadow-sm');
+        header.classList.add('py-4');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+        window.removeEventListener('scroll', reveal);
+        window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <>
+    <div className="bg-white text-on-surface overflow-x-hidden">
       {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-[#041329]/80 backdrop-blur-xl shadow-2xl shadow-black/50">
-        <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
-          <div className="text-2xl font-bold tracking-tighter bg-gradient-to-br from-blue-200 to-blue-500 bg-clip-text text-transparent">
-            Arcfuse
+      <header className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant transition-all duration-300 py-4">
+        <nav className="max-w-7xl mx-auto flex justify-between items-center px-gutter">
+          <div className="flex items-center gap-base">
+            <img alt="Arcfuse Logo" className="w-8 h-8 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiFo650op9J-PLLPrXKPoQV496QWchDdyF-_zAx-nQaiEdouhqVgJfca4qfnJ-cEKTJA-6mIZmIvEZD2mzqxIxd_8Mlah32M28CxuhhMrt-4X4LWtcyMvUE7sMx0QjXngqnR3qNLZoiJoi2eiB0Hx7uxj92NEv7ZMQCkcJRyb-IWj98dhZS4W-miHrjVlZoiHTeCl-Qy4e7kFC7FpT6V5f_Nz4MsOgvyAhspo1YxqsovNmSCypEYNN730i0Wkruigt8a4k3kUifYI" />
+            <span className="font-headline-md text-headline-md font-bold text-on-surface">Arcfuse</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 font-['Inter'] text-sm font-medium tracking-tight">
-            <Link href="#" className="text-blue-400 font-semibold transition-all duration-300">Features</Link>
-            <Link href="/solutions" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Solutions</Link>
-            <Link href="/resources" className="text-slate-400 hover:text-slate-100 hover:bg-white/5 rounded-lg transition-all duration-300 px-3 py-2">Resources</Link>
+          <div className="hidden md:flex gap-lg items-center">
+            <a className="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Dashboard</a>
+            <a className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Platforms</a>
+            <a className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Community</a>
+            <a className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Contributors</a>
+            <a className="text-secondary hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-xs" href="#">GitHub <span className="material-symbols-outlined text-[16px]">open_in_new</span></a>
           </div>
-          <div className="flex items-center gap-4">
-            <Link href="/login" className="hidden sm:block text-slate-400 hover:text-slate-100 font-medium text-sm px-4 py-2 transition-all">
-              Sign In
-            </Link>
-            <Link href="/signup" className="bg-gradient-to-br from-primary to-primary-container text-on-primary px-5 py-2.5 rounded-lg text-sm font-bold active:scale-95 duration-200 transition-all shadow-lg shadow-primary/20">
-              Get Started
-            </Link>
+          <div>
+            <button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">Get Started</button>
           </div>
-        </div>
-        <div className="bg-gradient-to-b from-[#112036] to-transparent h-[1px] opacity-20"></div>
-      </nav>
+        </nav>
+      </header>
 
-      <main>
-        {/* Hero Section */}
-        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl -z-10 pointer-events-none">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary-container/10 blur-[120px] rounded-full"></div>
-          </div>
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/10 text-secondary text-xs font-bold tracking-widest uppercase mb-8 border border-secondary-container/20">
-              <span className="flex h-2 w-2 rounded-full bg-secondary-container animate-pulse"></span>
-              Now in Private Beta
+      {/* Hero Section */}
+      <section className="hero-gradient pt-[140px] pb-xl px-gutter relative overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
+          <div className="reveal">
+            <div className="inline-flex items-center gap-xs bg-primary-fixed text-on-primary-fixed-variant px-4 py-1 rounded-full font-label-md text-label-md mb-md">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+              🚀 Open Source • Multi-Platform
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6 leading-[1.1]">
-              Unify all your social platforms <br className="hidden md:block" />
-              <span className="bg-gradient-to-r from-primary via-secondary-container to-primary bg-clip-text text-transparent">
-                in one powerful space.
-              </span>
-            </h1>
-            <p className="text-on-surface-variant text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-              Stop tab-switching. Manage Discord, X, Slack, and more through a high-performance command center designed for modern workflows.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <Link href="/signup" className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl text-base font-bold shadow-xl shadow-primary/25 active:scale-95 transition-all inline-flex items-center justify-center">
-                Get Started Free
-              </Link>
-              <button className="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold border border-outline-variant/30 text-primary hover:bg-surface-container transition-all flex items-center justify-center gap-2">
-                <span className="material-symbols-outlined">play_circle</span>
-                View Demo
+            <h1 className="font-display-lg text-display-lg mb-md text-on-surface">The Open Source Standard for <span className="text-primary-container">Multi-Platform</span> Social Media</h1>
+            <p className="font-body-lg text-body-lg text-secondary mb-lg max-w-[540px]">Schedule, manage, and analyze your social presence across X, Instagram, LinkedIn, and TikTok with a single, community-driven dashboard.</p>
+            <div className="flex flex-col sm:flex-row gap-md">
+              <button className="bg-primary-container text-on-primary-container px-8 py-4 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm shadow-lg hover:shadow-xl transition-all">
+                Launch Dashboard <span className="material-symbols-outlined">rocket_launch</span>
+              </button>
+              <button className="bg-white border border-outline-variant text-on-surface px-8 py-4 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm hover:bg-surface transition-all">
+                View Codebase <span className="material-symbols-outlined">code</span>
               </button>
             </div>
-
-            {/* Sleek Abstract Tech Dashboard Preview */}
-            <div className="relative max-w-5xl mx-auto group">
-              <div className="absolute -inset-1 bg-gradient-to-b from-primary/20 to-transparent rounded-2xl blur-lg opacity-50"></div>
-              <div className="relative bg-surface-container rounded-2xl overflow-hidden shadow-2xl border border-outline-variant/10">
-                {/* Note: In a real Next.js app with next/image, remote domains need to be configured. Using img for now to match the HTML directly. */}
-                <img
-                  alt="Dashboard Preview"
-                  className="w-full h-auto opacity-90 group-hover:scale-[1.02] transition-transform duration-700"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYVlu0BzNwXRP7oni5mpW96ZmEA2I7rxDUiEmwf4_hVuc8OX-1Xcl6iMgW8mxGjb-4eT0j62J2Y6sbIB1LM7mzs9iGVdbuaKAa1yu-vtSK22UBtZYvp17599kFOXGFU9q_t5BtvuT9R6hAt8u6ZgBvrh5verFkIyqHQdu6YjvhPvMWIH2swBZBSpSkid43jFA0Z0zZbADz-Ww1pSquH6SxFPyzqcIn8ZDzwJ_EC5PMJ3dHHrdLUlIzQpwQ9HFHJEOo-0-Q3lqMuiM"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
-              </div>
-            </div>
           </div>
-        </section>
-
-        {/* Features Bento Grid */}
-        <section className="py-24 bg-surface-container-low relative">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16 text-center">
-              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-on-surface mb-4">
-                Command your ecosystem
-              </h2>
-              <p className="text-on-surface-variant max-w-xl mx-auto">
-                Everything you need to stay on top of your digital presence across every platform.
-              </p>
+          <div className="relative hidden lg:block reveal" style={{ transitionDelay: '200ms' }}>
+            <div className="glass-card p-2 rounded-2xl float-animation relative z-10 shadow-2xl overflow-hidden">
+              <img alt="Arcfuse Social Media Dashboard Interface" className="rounded-xl w-full h-auto border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMtc1Pegq2gk9JUnGtS26ilVijFpFD1Pp31CYP6eOHUoQFRn9quuF_5Z94fH5sS5eqsvzRXXAyKjoi3IJOvHwhCgSaYCkW5tdE8SaN1MDVcCtJtWsHwtApwGXRe2AJrI2drwsXJPx7QQJNfNyDpT-JaR65lY3VkF21c87hY12HWy4uVPDZjFFqb73OMidyFK09tlFdiUaFa5K3oONQio_y6q6RrwPkk45h0q1h85KWSiNRBlHy44BhijNRsbzFUpX5OkTtZ5W0eJE" />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-              {/* Multi-platform integration */}
-              <div className="md:col-span-8 bg-surface-container p-8 rounded-xl border border-outline-variant/10 hover:bg-surface-container-high transition-all group">
-                <div className="flex flex-col md:flex-row gap-8 items-center">
-                  <div className="flex-1">
-                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
-                      <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>hub</span>
-                    </div>
-                    <h3 className="text-2xl font-bold mb-3 text-on-surface">Multi-platform Integration</h3>
-                    <p className="text-on-surface-variant">
-                      Seamlessly connect Discord, X, LinkedIn, and Slack. Our native connectors ensure high-fidelity data syncing without latency.
-                    </p>
-                  </div>
-                  <div className="w-full md:w-1/2 flex justify-center items-center gap-4 py-8">
-                    <div className="w-16 h-16 rounded-2xl bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                      <span className="material-symbols-outlined text-3xl">alternate_email</span>
-                    </div>
-                    <div className="w-16 h-16 rounded-2xl bg-surface-container-highest flex items-center justify-center text-secondary group-hover:scale-110 transition-transform delay-75">
-                      <span className="material-symbols-outlined text-3xl">forum</span>
-                    </div>
-                    <div className="w-16 h-16 rounded-2xl bg-surface-container-highest flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform delay-150">
-                      <span className="material-symbols-outlined text-3xl">groups</span>
-                    </div>
-                  </div>
+            <div className="absolute -bottom-10 -left-10 glass-card p-6 rounded-2xl z-20 shadow-xl max-w-[280px]">
+              <div className="flex items-center gap-sm mb-sm">
+                <div className="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary">auto_awesome</span>
                 </div>
+                <span className="font-label-md text-label-md font-bold">Latest Analytics</span>
               </div>
-
-              {/* Unified Dashboard */}
-              <div className="md:col-span-4 bg-surface-container p-8 rounded-xl border border-outline-variant/10 hover:bg-surface-container-high transition-all">
-                <div className="w-12 h-12 bg-secondary/10 text-secondary rounded-lg flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-3xl">dashboard_customize</span>
-                </div>
-                <h3 className="text-2xl font-bold mb-3 text-on-surface">Unified Dashboard</h3>
-                <p className="text-on-surface-variant">
-                  A single feed of truth. Filter, sort, and search across all channels simultaneously.
-                </p>
-              </div>
-
-              {/* Real-time Updates */}
-              <div className="md:col-span-5 bg-surface-container p-8 rounded-xl border border-outline-variant/10 hover:bg-surface-container-high transition-all">
-                <div className="w-12 h-12 bg-tertiary/10 text-tertiary rounded-lg flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
-                </div>
-                <h3 className="text-2xl font-bold mb-3 text-on-surface">Real-time Updates</h3>
-                <p className="text-on-surface-variant">
-                  Low-latency notifications ensure you never miss a critical mention or message. Instant sync across all devices.
-                </p>
-              </div>
-
-              {/* Clean UI */}
-              <div className="md:col-span-7 bg-surface-container p-8 rounded-xl border border-outline-variant/10 hover:bg-surface-container-high transition-all overflow-hidden relative">
-                <div className="flex gap-8">
-                  <div className="flex-1">
-                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
-                      <span className="material-symbols-outlined text-3xl">auto_awesome</span>
-                    </div>
-                    <h3 className="text-2xl font-bold mb-3 text-on-surface">Clean UI</h3>
-                    <p className="text-on-surface-variant">
-                      Focus on content with our distraction-free, editorial-grade interface designed for long-term productivity.
-                    </p>
-                  </div>
-                  <div className="absolute -right-4 -bottom-4 w-48 h-48 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-full blur-3xl"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="py-24 max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-sm font-bold tracking-[0.2em] text-secondary uppercase mb-4">The Workflow</h2>
-            <h3 className="text-3xl md:text-5xl font-black text-on-surface">Designed for simplicity</h3>
-          </div>
-          <div className="relative flex flex-col md:flex-row justify-between gap-12 md:gap-4">
-            {/* Connector Line */}
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outline-variant/20 to-transparent -z-10"></div>
-
-            {/* Step 1 */}
-            <div className="flex-1 text-center group">
-              <div className="w-16 h-16 rounded-full bg-surface-container border border-outline-variant/20 flex items-center justify-center mx-auto mb-8 relative z-10 group-hover:border-primary/50 transition-all">
-                <span className="text-primary font-bold">01</span>
-              </div>
-              <h4 className="text-xl font-bold mb-4">Connect Accounts</h4>
-              <p className="text-on-surface-variant text-sm px-4">Integrate your social ecosystem in minutes with our secure OAuth flow.</p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="flex-1 text-center group">
-              <div className="w-16 h-16 rounded-full bg-surface-container border border-outline-variant/20 flex items-center justify-center mx-auto mb-8 relative z-10 group-hover:border-secondary-container/50 transition-all">
-                <span className="text-secondary-container font-bold">02</span>
-              </div>
-              <h4 className="text-xl font-bold mb-4">View Everything</h4>
-              <p className="text-on-surface-variant text-sm px-4">Experience all your feeds curated in a single, high-fidelity visual stream.</p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex-1 text-center group">
-              <div className="w-16 h-16 rounded-full bg-surface-container border border-outline-variant/20 flex items-center justify-center mx-auto mb-8 relative z-10 group-hover:border-tertiary/50 transition-all">
-                <span className="text-tertiary font-bold">03</span>
-              </div>
-              <h4 className="text-xl font-bold mb-4">Manage Effortlessly</h4>
-              <p className="text-on-surface-variant text-sm px-4">Reply, react, and organize content without ever leaving the Arcfuse space.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Preview Section */}
-        <section className="py-24 bg-surface-dim overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="bg-surface-container-high rounded-[2rem] p-8 md:p-16 border border-outline-variant/10 shadow-2xl relative">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 bg-primary rounded-full text-on-primary font-bold text-sm tracking-wide">
-                Live Dashboard Preview
-              </div>
-              <div className="grid lg:grid-cols-12 gap-12 items-center">
-                <div className="lg:col-span-5">
-                  <h2 className="text-4xl md:text-5xl font-black text-on-surface leading-tight mb-8">
-                    One feed. <br />Infinite focus.
-                  </h2>
-                  <ul className="space-y-6">
-                    <li className="flex items-start gap-4">
-                      <span className="material-symbols-outlined text-secondary-container">check_circle</span>
-                      <div>
-                        <h5 className="font-bold text-lg mb-1">Global Search</h5>
-                        <p className="text-on-surface-variant text-sm">Find messages across Discord and Slack instantly.</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-4">
-                      <span className="material-symbols-outlined text-secondary-container">check_circle</span>
-                      <div>
-                        <h5 className="font-bold text-lg mb-1">Smart Sorting</h5>
-                        <p className="text-on-surface-variant text-sm">AI-driven prioritization surfaces what matters most.</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-4">
-                      <span className="material-symbols-outlined text-secondary-container">check_circle</span>
-                      <div>
-                        <h5 className="font-bold text-lg mb-1">Theme Customization</h5>
-                        <p className="text-on-surface-variant text-sm">Tailor your workspace to your visual preference.</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div className="lg:col-span-7">
-                  <div className="glass-panel p-4 rounded-2xl border border-white/5 relative overflow-hidden group">
-                    <div className="flex items-center gap-2 mb-6 px-2">
-                      <div className="w-3 h-3 rounded-full bg-red-400/50"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-400/50"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-400/50"></div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="bg-surface-container-highest/50 p-4 rounded-xl flex gap-4 border border-white/5">
-                        <div className="w-10 h-10 rounded-full bg-primary/20 shrink-0"></div>
-                        <div className="flex-1 space-y-2">
-                          <div className="h-3 w-24 bg-primary/20 rounded-full"></div>
-                          <div className="h-2 w-full bg-on-surface-variant/10 rounded-full"></div>
-                          <div className="h-2 w-3/4 bg-on-surface-variant/10 rounded-full"></div>
-                        </div>
-                      </div>
-                      <div className="bg-surface-container-highest/50 p-4 rounded-xl flex gap-4 border border-white/5 scale-[1.05] shadow-xl">
-                        <div className="w-10 h-10 rounded-full bg-secondary-container/20 shrink-0"></div>
-                        <div className="flex-1 space-y-2">
-                          <div className="h-3 w-32 bg-secondary-container/20 rounded-full"></div>
-                          <div className="h-2 w-full bg-on-surface-variant/10 rounded-full"></div>
-                        </div>
-                      </div>
-                      <div className="bg-surface-container-highest/50 p-4 rounded-xl flex gap-4 border border-white/5">
-                        <div className="w-10 h-10 rounded-full bg-tertiary/20 shrink-0"></div>
-                        <div className="flex-1 space-y-2">
-                          <div className="h-3 w-28 bg-tertiary/20 rounded-full"></div>
-                          <div className="h-2 w-full bg-on-surface-variant/10 rounded-full"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-primary/10 blur-[80px] -z-10 group-hover:bg-primary/20 transition-all"></div>
+              <div className="space-y-sm">
+                <div className="h-2 w-full bg-surface-container-high rounded"></div>
+                <div className="h-2 w-3/4 bg-surface-container-high rounded"></div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-secondary">+12% Growth</span>
+                  <div className="flex -space-x-2">
+                    <div className="w-6 h-6 rounded-full border-2 border-white bg-slate-200"></div>
+                    <div className="w-6 h-6 rounded-full border-2 border-white bg-slate-300"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-
-        {/* Open Source Section */}
-        <section className="py-24 relative">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-black mb-6 text-on-surface">100% Free & Open Source</h2>
-              <p className="text-xl text-on-surface-variant max-w-2xl mx-auto">
-                Arcfuse is built by the community, for the community. Use it forever without paying a dime.
-              </p>
+      {/* Trust / Stats Section */}
+      <section className="py-lg bg-surface-container-lowest border-y border-outline-variant">
+        <div className="max-w-7xl mx-auto px-gutter">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-lg text-center mb-xl">
+            <div className="reveal">
+              <p className="font-display-lg text-display-lg text-primary-container">50k+</p>
+              <p className="font-label-md text-label-md text-secondary uppercase tracking-widest">Active Accounts</p>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-              <div className="bg-surface-container p-8 rounded-3xl border border-primary/20 flex flex-col items-center text-center max-w-sm hover:border-primary/50 transition-all">
-                <span className="material-symbols-outlined text-primary text-5xl mb-4">code</span>
-                <h3 className="text-xl font-bold text-on-surface mb-2">Apache 2.0 Licensed</h3>
-                <p className="text-on-surface-variant mb-6">Modify, distribute, and use it commercially without restrictions.</p>
-                <a href="https://github.com/spark16x/arcfuse" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary font-bold hover:underline">
-                  View on GitHub <span className="material-symbols-outlined text-sm">open_in_new</span>
-                </a>
+            <div className="reveal" style={{ transitionDelay: '100ms' }}>
+              <p className="font-display-lg text-display-lg text-primary-container">1.2M</p>
+              <p className="font-label-md text-label-md text-secondary uppercase tracking-widest">Posts Scheduled</p>
+            </div>
+            <div className="reveal" style={{ transitionDelay: '200ms' }}>
+              <p className="font-display-lg text-display-lg text-primary-container">500+</p>
+              <p className="font-label-md text-label-md text-secondary uppercase tracking-widest">Contributors</p>
+            </div>
+          </div>
+          <div className="marquee-container">
+            <div className="marquee-content">
+              <div className="flex items-center gap-md">
+                <img alt="Contributor" className="w-12 h-12 rounded-full border-2 border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_9wHnDuUQ7A1hba-j6cULwHE6QEYh5Xp8PCQHmu0qQ368-L5mg5zgDA9VUGz-BCZ6lNtlzrw-0yhfckFImc40W7VvprQDqBOrLUDEND0Wi0QIDrgg0KeLq9w0-kGipfkIlf5qTlsUCCbmS4YqZv47I0XavNhT0kcDNBh1qXVJsaZ3Ba2fHNckwQiWmNWKMUKH4a6at1VbuqCV60RUS4HTEeU_DaQ0SIUu972xfouXjx1JttiRPtr-Kl5RAQLhM300YbIwRSEVnNY" />
+                <span className="font-label-md text-label-md">Alex Rivera</span>
+              </div>
+              <div className="flex items-center gap-md">
+                <img alt="Contributor" className="w-12 h-12 rounded-full border-2 border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxl9Cx_QcMWPvP_XOzIrnbOkLlRhCeq__iIatqF535dx5yT0h19TVL9mzVIu4ut3MbPaKtCjQE89l4bSy9p9Km8IMHCQQuatlaUz7w9rxhlaUgGEQnZSeeI9u2ozLhswY72JY-CF5bB-RrQCJpx7Z61DmshuMYm1qF5uDR15baZhnHhmCmHzmgNwZMxqE11qGivbK2N59Lg3BHjLwKKNqDnhnNqfqKiHLyln5mRKSjt3GSYfVRqd5-haJbFdCNrHZ07e4t2LcjZd0" />
+                <span className="font-label-md text-label-md">Sarah Chen</span>
+              </div>
+              <div className="flex items-center gap-md">
+                <img alt="Contributor" className="w-12 h-12 rounded-full border-2 border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGtODGSYzZmh_BdVfzMoYKeYALbxikRJ7o4zM24lUfx2viCDdk-jHRB_BdbfEdtyjO7xrGRnxSOEgn8ygCGeVdYdJVuFCcgmtVOL7tp1JCoHVefPYT9b7Kf0fPn-E42W9yz5U2DEo0YKmcIVUcIq0XuWeHFaat_aGi6Z70elIWpm0ftKfzy6IP2dD-aEoSOoZDq-jKNjpkoB8ctzDJNswyCxIwT2oV-sHfH28B1belq1AGRQDRF1TKYugg7Fh3CGn8l8jt64W6oiY" />
+                <span className="font-label-md text-label-md">Marco V.</span>
+              </div>
+              <div className="flex items-center gap-md">
+                <img alt="Contributor" className="w-12 h-12 rounded-full border-2 border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgV4vIM6UusNcOO5DJcUkmOz95Z_-HCpndSV5RYAm9jFfXOB-juk0WqDLyAWW-1UUCJTDvDBuL1dCb8LphVV5xFfyln3nRRm67vfGrZWZGYccNeiMokSuD49zQBnBIvVVfywH1ILoBS6yr3PFJwK_36Z5RfDXUa1tvB6pZyqdbbJuGQ7rkKwrOYzRKcLzhwofeX0llMt-ABSklhII-Jn_itgxW2NJ0aH4d28_B-frJJhl8C6AsS5IPUFevndmmNhNEH98y4HuBELw" />
+                <span className="font-label-md text-label-md">Jameson K.</span>
+              </div>
+            </div>
+            <div aria-hidden="true" className="marquee-content">
+              <div className="flex items-center gap-md">
+                <img alt="Contributor" className="w-12 h-12 rounded-full border-2 border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaV9MUrAoN9fDIMh4ySNsSpJsLfLrcoSJKZdwRK6OSbQSVOqDaLGUKA7x6aaftjZNMtYTUi25DRer8E8G_z-TZGN6A11widYsT3CUZSqP5cyIx8OKXAejhB4J_VVxY1EWeV2y2z49A5Y09Pgxrmur-ETO5YBdtsdH06kMM2SKuWAu_NOn-GO_t0oxm_t3nlHv9ip3eTSL9kf_NinmFcGbjbHaXBcOVoiPDwaUkpm5XNlH14_14vWvUm8mfWgp7NHkFpPqAUq78K3M" />
+                <span className="font-label-md text-label-md">Elena Rodriguez</span>
+              </div>
+              <div className="flex items-center gap-md">
+                <img alt="Contributor" className="w-12 h-12 rounded-full border-2 border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_9wHnDuUQ7A1hba-j6cULwHE6QEYh5Xp8PCQHmu0qQ368-L5mg5zgDA9VUGz-BCZ6lNtlzrw-0yhfckFImc40W7VvprQDqBOrLUDEND0Wi0QIDrgg0KeLq9w0-kGipfkIlf5qTlsUCCbmS4YqZv47I0XavNhT0kcDNBh1qXVJsaZ3Ba2fHNckwQiWmNWKMUKH4a6at1VbuqCV60RUS4HTEeU_DaQ0SIUu972xfouXjx1JttiRPtr-Kl5RAQLhM300YbIwRSEVnNY" />
+                <span className="font-label-md text-label-md">Alex Rivera</span>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Final CTA */}
-        <section className="py-24 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-surface to-surface-container-lowest -z-10"></div>
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter">Start using Arcfuse today</h2>
-            <p className="text-on-surface-variant text-lg mb-12 max-w-xl mx-auto">
-              Join 10,000+ professionals who have unified their social digital workflow. No credit card required to start.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link href="/signup" className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-primary/30 active:scale-95 transition-all inline-flex items-center justify-center">
-                Sign Up Now
-              </Link>
-              <Link href="#" className="text-on-surface font-semibold flex items-center justify-center gap-2 group">
-                Talk to Sales
-                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-              </Link>
+      {/* Why Arcfuse Section */}
+      <section className="py-xl max-w-7xl mx-auto px-gutter">
+        <div className="text-center mb-xl reveal">
+          <h2 className="font-headline-lg text-headline-lg mb-sm">Why Arcfuse?</h2>
+          <p className="text-secondary font-body-md text-body-md max-w-xl mx-auto">A modern platform built on open principles to help you navigate the complex social media landscape.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+          {/* Feature Card 1 */}
+          <div className="p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal">
+            <div className="w-12 h-12 bg-primary-fixed text-primary rounded-lg flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-white transition-colors">
+              <span className="material-symbols-outlined">chat</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-xs">Unified Inbox</h3>
+            <p className="text-secondary font-body-sm text-body-sm">Manage all your social conversations and comments in one powerful interface.</p>
+          </div>
+          {/* Feature Card 2 */}
+          <div className="p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal" style={{ transitionDelay: '100ms' }}>
+            <div className="w-12 h-12 bg-primary-fixed text-primary rounded-lg flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-white transition-colors">
+              <span className="material-symbols-outlined">code</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-xs">Open Source</h3>
+            <p className="text-secondary font-body-sm text-body-sm">Fully transparent, community-owned, and extensible via plugins.</p>
+          </div>
+          {/* Feature Card 3 */}
+          <div className="p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal" style={{ transitionDelay: '200ms' }}>
+            <div className="w-12 h-12 bg-primary-fixed text-primary rounded-lg flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-white transition-colors">
+              <span className="material-symbols-outlined">calendar_month</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-xs">Post Scheduler</h3>
+            <p className="text-secondary font-body-sm text-body-sm">Visual calendar for planning and publishing content across all major platforms.</p>
+          </div>
+          {/* Feature Card 4 */}
+          <div className="p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal" style={{ transitionDelay: '300ms' }}>
+            <div className="w-12 h-12 bg-primary-fixed text-primary rounded-lg flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-white transition-colors">
+              <span className="material-symbols-outlined">insights</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-xs">Analytics</h3>
+            <p className="text-secondary font-body-sm text-body-sm">Deep insights into engagement and growth with privacy-first tracking.</p>
+          </div>
+          {/* Feature Card 5 */}
+          <div className="p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal" style={{ transitionDelay: '400ms' }}>
+            <div className="w-12 h-12 bg-primary-fixed text-primary rounded-lg flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-white transition-colors">
+              <span className="material-symbols-outlined">hub</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-xs">Cross-Platform</h3>
+            <p className="text-secondary font-body-sm text-body-sm">Native support for X, Instagram, LinkedIn, TikTok, and more.</p>
+          </div>
+          {/* Feature Card 6 */}
+          <div className="p-8 rounded-2xl border border-outline-variant hover:border-primary/50 transition-all group reveal" style={{ transitionDelay: '500ms' }}>
+            <div className="w-12 h-12 bg-primary-fixed text-primary rounded-lg flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-white transition-colors">
+              <span className="material-symbols-outlined">api</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-xs">Developer First</h3>
+            <p className="text-secondary font-body-sm text-body-sm">Robust API and webhooks for building custom social workflows.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Open Source Section */}
+      <section className="py-xl bg-inverse-surface text-white">
+        <div className="max-w-7xl mx-auto px-gutter grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
+          <div className="reveal">
+            <div className="inline-flex items-center gap-xs text-primary-fixed mb-md">
+              <span className="material-symbols-outlined">terminal</span>
+              <span className="font-code-sm text-code-sm">git checkout -b social-integration</span>
+            </div>
+            <h2 className="font-headline-lg text-headline-lg mb-md">Built by the Community</h2>
+            <p className="text-secondary-fixed-dim font-body-md text-body-md mb-lg">Arcfuse isn't just a SaaS; it's a living ecosystem. We believe the tools that manage our social identity should be transparent and community-owned.</p>
+            <div className="space-y-md">
+              <div className="flex gap-md items-start">
+                <div className="w-6 h-6 rounded-full bg-primary-fixed text-primary flex items-center justify-center shrink-0 mt-1">
+                  <span className="material-symbols-outlined text-[14px]">check</span>
+                </div>
+                <div>
+                  <h4 className="font-bold">Transparent Roadmap</h4>
+                  <p className="text-secondary-fixed-dim text-sm">Vote on new platform integrations and API support directly on GitHub.</p>
+                </div>
+              </div>
+              <div className="flex gap-md items-start">
+                <div className="w-6 h-6 rounded-full bg-primary-fixed text-primary flex items-center justify-center shrink-0 mt-1">
+                  <span className="material-symbols-outlined text-[14px]">check</span>
+                </div>
+                <div>
+                  <h4 className="font-bold">Plugin Marketplace</h4>
+                  <p className="text-secondary-fixed-dim text-sm">Extend the dashboard with community-built automation and analytics modules.</p>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+          <div className="bg-surface/10 rounded-2xl p-6 border border-white/10 reveal" style={{ transitionDelay: '200ms' }}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="font-headline-md text-headline-md">Integration Requests</h3>
+              <span className="text-xs bg-white/20 px-2 py-1 rounded">Active Voting</span>
+            </div>
+            <div className="space-y-md">
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all cursor-pointer">
+                <span className="font-label-md">Threads API Support</span>
+                <div className="flex items-center gap-sm">
+                  <span className="material-symbols-outlined text-primary-fixed" data-weight="fill">thumb_up</span>
+                  <span>845</span>
+                </div>
+              </div>
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all cursor-pointer">
+                <span className="font-label-md">Bluesky Integration</span>
+                <div className="flex items-center gap-sm">
+                  <span className="material-symbols-outlined">thumb_up</span>
+                  <span>512</span>
+                </div>
+              </div>
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all cursor-pointer">
+                <span className="font-label-md">Mastodon Bridge</span>
+                <div className="flex items-center gap-sm">
+                  <span className="material-symbols-outlined">thumb_up</span>
+                  <span>320</span>
+                </div>
+              </div>
+            </div>
+            <button className="w-full mt-md bg-white text-on-surface py-3 rounded-lg font-bold hover:bg-primary-fixed transition-all">View Full Roadmap</button>
+          </div>
+        </div>
+      </section>
 
-      {/* Product Hunt Badge - Fixed Right Side */}
-      <div
-        className="fixed z-50 transition-transform hover:-translate-x-2"
-        style={{ right: '-98px', top: '50%', transform: 'translateY(-50%) rotate(-90deg)' }}
-      >
-        <a href="https://www.producthunt.com/products/arcfuse?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-arcfuse" target="_blank" rel="noopener noreferrer" className="block drop-shadow-2xl">
-          <img alt="Arcfuse - Unify Your Digital World. | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1140986&amp;theme=dark&amp;t=1778128185000" />
-        </a>
-      </div>
+      {/* Platform Support */}
+      <section className="py-xl bg-surface">
+        <div className="max-w-7xl mx-auto px-gutter">
+          <h2 className="font-headline-lg text-headline-lg mb-xl reveal">Platform Support</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-md">
+            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal">
+              <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
+                <span className="material-symbols-outlined text-primary">tag</span>
+              </div>
+              <span className="font-bold">Twitter / X</span>
+            </div>
+            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '100ms' }}>
+              <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
+                <span className="material-symbols-outlined text-primary">camera_alt</span>
+              </div>
+              <span className="font-bold">Instagram</span>
+            </div>
+            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '200ms' }}>
+              <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
+                <span className="material-symbols-outlined text-primary">work</span>
+              </div>
+              <span className="font-bold">LinkedIn</span>
+            </div>
+            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '300ms' }}>
+              <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
+                <span className="material-symbols-outlined text-primary">movie</span>
+              </div>
+              <span className="font-bold">TikTok</span>
+            </div>
+            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '400ms' }}>
+              <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
+                <span className="material-symbols-outlined text-primary">play_circle</span>
+              </div>
+              <span className="font-bold">YouTube</span>
+            </div>
+            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '500ms' }}>
+              <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
+                <span className="material-symbols-outlined text-primary">alternate_email</span>
+              </div>
+              <span className="font-bold">Threads</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      </main>
+      {/* Community Showcase */}
+      <section className="py-xl max-w-7xl mx-auto px-gutter">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-xl reveal">
+          <div>
+            <h2 className="font-headline-lg text-headline-lg mb-sm">Community Showcase</h2>
+            <p className="text-secondary font-body-md text-body-md">What's happening right now in the Arcfuse ecosystem.</p>
+          </div>
+          <button className="mt-md md:mt-0 text-primary font-bold flex items-center gap-xs">View all activity <span className="material-symbols-outlined">arrow_forward</span></button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
+          <div className="border border-outline-variant rounded-2xl p-6 hover:bg-surface transition-all reveal">
+            <div className="flex justify-between items-start mb-md">
+              <div className="flex gap-sm items-center">
+                <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+                  <img alt="Profile" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZF3PpCLnL3-HMRJpIHltbZTCcsZm0YjbvzFzGsgQeHE1_t0bcMl6dSAahI0DL5uMj3SHdsl3dW_kcuDvk6OngQfxI2oyzEpDCQCXwCHDKPrHRRDtZ2lwlI70Kf8ghrK9hYuGS0oNfpDiI83SjGz8DGm4uOLA9ggrWus2rOOUAITPIhREdSu4Pga1YczpfvhYmcWmLFfxtU0FupDLyBaKaN6fV3EN0re1R9WGpWw0PDI7k8A0No7nOn5j22gYrqUXldQH1ZAGWReA" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm">Maya Jensen</h4>
+                  <p className="text-xs text-secondary">Added a new project</p>
+                </div>
+              </div>
+              <span className="text-xs text-secondary">15m ago</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-xs">LinkedIn API v2 Integration</h3>
+            <p className="text-secondary text-sm mb-md">A seamless connector supporting carousel posts and professional profile analytics. Now available in the core build.</p>
+            <div className="flex gap-sm">
+              <span className="px-2 py-1 rounded bg-surface-container text-xs text-primary">#SocialMedia</span>
+              <span className="px-2 py-1 rounded bg-surface-container text-xs text-primary">#LinkedIn</span>
+            </div>
+          </div>
+          <div className="border border-outline-variant rounded-2xl p-6 hover:bg-surface transition-all reveal" style={{ transitionDelay: '200ms' }}>
+            <div className="flex justify-between items-start mb-md">
+              <div className="flex gap-sm items-center">
+                <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+                  <img alt="Profile" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4x8C0uxJSA_wbJelD1E6LwrLm5hCdrMx2HTMclOJYXblxiwXoVU4V06Ts1xKfv3KzJ1dpjZl3q2mhkbtFkxgWAPQxSfL8DIyiHgGMxc9wDNu66Un3b85HUjKNOsgpkDxBwcfwYS2ZxeE8bUR_SuRFOnZrMeIlJOSCy7nf-Y2QDiOD7jmYiSZIJ0mOfkeHQd43Kl9P2ryh4NXnrY62N8SYuVYhyitshiV6DNd3MnEsGHCdxB7Y6rpXHQXST9cwGnGG2KdrH94Hf3s" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm">Kevin Thorne</h4>
+                  <p className="text-xs text-secondary">Merged Pull Request</p>
+                </div>
+              </div>
+              <span className="text-xs text-secondary">1h ago</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-xs">Plugin: Auto-Scheduling Engine</h3>
+            <p className="text-secondary text-sm mb-md">Optimized publishing queues by 40% with smart delay logic and timezone-aware routing.</p>
+            <div className="flex gap-sm">
+              <span className="px-2 py-1 rounded bg-surface-container text-xs text-primary">#Scheduling</span>
+              <span className="px-2 py-1 rounded bg-surface-container text-xs text-primary">#Plugins</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-xl max-w-7xl mx-auto px-gutter reveal">
+        <div className="bg-primary-container rounded-3xl p-xl text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
+          <div className="relative z-10">
+            <h2 className="font-display-lg text-display-lg text-white mb-md">Build the Future of Social Media Management</h2>
+            <p className="text-primary-fixed font-body-lg text-body-lg mb-xl max-w-2xl mx-auto">Join thousands of developers building a transparent, open-source alternative for social media automation.</p>
+            <div className="flex flex-col sm:flex-row gap-md justify-center">
+              <button className="bg-white text-primary px-8 py-4 rounded-lg font-bold hover:bg-primary-fixed transition-all">Join Community</button>
+              <button className="bg-primary text-white border border-white/20 px-8 py-4 rounded-lg font-bold hover:bg-primary/80 transition-all">Start Contributing</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="bg-[#041329] w-full py-20 px-8 border-t border-blue-900/20">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
-          <div className="flex flex-col gap-4">
-            <div className="text-xl font-black text-slate-200">Arcfuse</div>
-            <div className="text-xs text-slate-500 font-['Inter'] uppercase tracking-widest font-semibold">
-              © 2024 Arcfuse Inc. All rights reserved.
+      <footer className="bg-surface-container-lowest border-t border-outline-variant py-xl px-gutter mt-xl">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-md">
+          <div className="col-span-2">
+            <div className="flex items-center gap-base mb-md">
+              <img alt="Arcfuse Logo" className="w-8 h-8 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiFo650op9J-PLLPrXKPoQV496QWchDdyF-_zAx-nQaiEdouhqVgJfca4qfnJ-cEKTJA-6mIZmIvEZD2mzqxIxd_8Mlah32M28CxuhhMrt-4X4LWtcyMvUE7sMx0QjXngqnR3qNLZoiJoi2eiB0Hx7uxj92NEv7ZMQCkcJRyb-IWj98dhZS4W-miHrjVlZoiHTeCl-Qy4e7kFC7FpT6V5f_Nz4MsOgvyAhspo1YxqsovNmSCypEYNN730i0Wkruigt8a4k3kUifYI" />
+              <span className="font-headline-md text-headline-md font-bold text-on-surface">Arcfuse</span>
             </div>
+            <p className="text-secondary font-body-sm text-body-sm max-w-sm mb-md">The open-source standard for social media management and automation. Forever community-owned.</p>
+            <p className="text-secondary font-body-sm text-body-sm">© 2024 Arcfuse Open Source Project. Built by the community.</p>
           </div>
-          <nav className="flex flex-wrap gap-8 font-['Inter'] text-xs text-slate-500 uppercase tracking-widest font-semibold">
-            <Link href="/privacy-policy" className="hover:text-slate-300 hover:underline transition-all">Privacy Policy</Link>
-            <Link href="/terms-of-service" className="hover:text-slate-300 hover:underline transition-all">Terms of Service</Link>
-            <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Security</Link>
-            <Link href="#" className="hover:text-slate-300 hover:underline transition-all">Status</Link>
-            <Link href="/contact" className="hover:text-slate-300 hover:underline transition-all">Contact</Link>
-          </nav>
-          <div className="flex gap-6 items-center">
-            <Link href="#" className="text-slate-500 hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm" aria-label="Twitter">
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path>
-              </svg>
-            </Link>
-            <Link href="#" className="text-slate-500 hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm" aria-label="GitHub">
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.292c0-6.627-5.373-12-12-12"></path>
-              </svg>
-            </Link>
+          <div>
+            <h4 className="font-label-md text-label-md font-bold mb-md">Product</h4>
+            <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Dashboard</a></li>
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Platforms</a></li>
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Integrations</a></li>
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Analytics</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-label-md text-label-md font-bold mb-md">Community</h4>
+            <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Contributors</a></li>
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">GitHub Repo</a></li>
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Discord</a></li>
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Plugins</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-label-md text-label-md font-bold mb-md">Legal</h4>
+            <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
+              <li><a className="hover:text-primary hover:underline transition-all" href="#">Cookie Policy</a></li>
+            </ul>
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

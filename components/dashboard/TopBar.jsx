@@ -12,7 +12,10 @@ export function TopBar() {
         {/* Mobile menu button */}
         <Sheet>
           <SheetTrigger asChild>
-            <button className="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-200 hover:text-foreground transition-all">
+            <button
+              className="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-200 hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              aria-label="Open mobile menu"
+            >
               <Menu className="w-5 h-5" />
             </button>
           </SheetTrigger>
@@ -23,14 +26,20 @@ export function TopBar() {
       </div>
 
       <div className="flex items-center gap-4">
-        <button className="w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-200 hover:text-foreground transition-all relative group">
+        <button
+          className="w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-200 hover:text-foreground transition-all relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          aria-label="View notifications"
+        >
           <Bell className="w-5 h-5 group-hover:animate-pulse-glow" />
           <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary shadow-glow-primary border-2 border-surface-100"></span>
         </button>
 
         <div className="h-6 w-px bg-glass-border mx-1"></div>
 
-        <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <button
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-1"
+          aria-label="User profile menu"
+        >
           <div className="text-right hidden sm:block">
             <p className="text-sm font-semibold text-foreground leading-none mb-1">{mockUser.name}</p>
             <p className="text-[10px] text-primary uppercase tracking-wider font-bold">Workspace Admin</p>
