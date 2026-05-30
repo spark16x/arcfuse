@@ -1,5 +1,5 @@
 import { stats } from "@/lib/mock-data";
-import { ArrowUpRight, TrendingUp, Users, MessageCircle, Share2, Activity, Bell, Smartphone, Target } from "lucide-react";
+import { ArrowUpRight, TrendingUp, Activity, Bell, Smartphone, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { memo } from "react";
 
