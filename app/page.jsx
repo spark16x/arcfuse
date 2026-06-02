@@ -47,11 +47,11 @@ export default function Home() {
             <span className="font-headline-md text-headline-md font-bold text-on-surface">Arcfuse</span>
           </div>
           <div className="hidden md:flex gap-lg items-center">
-            <a className="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Dashboard</a>
-            <a className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Platforms</a>
-            <a className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Community</a>
-            <a className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Contributors</a>
-            <a className="text-secondary hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-xs" href="#">GitHub <span className="material-symbols-outlined text-[16px]">open_in_new</span></a>
+            <Link className="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Dashboard</Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Platforms</Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Community</Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Contributors</Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-xs" href="#">GitHub <span className="material-symbols-outlined text-[16px]">open_in_new</span></Link>
           </div>
           <div>
             <button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">Get Started</button>
@@ -405,27 +405,27 @@ export default function Home() {
           <div>
             <h4 className="font-label-md text-label-md font-bold mb-md">Product</h4>
             <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Dashboard</a></li>
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Platforms</a></li>
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Integrations</a></li>
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Analytics</a></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Dashboard</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Platforms</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Integrations</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Analytics</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-label-md text-label-md font-bold mb-md">Community</h4>
             <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Contributors</a></li>
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">GitHub Repo</a></li>
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Discord</a></li>
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Plugins</a></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Contributors</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">GitHub Repo</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Discord</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Plugins</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-label-md text-label-md font-bold mb-md">Legal</h4>
             <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
-              <li><a className="hover:text-primary hover:underline transition-all" href="#">Cookie Policy</a></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Terms of Service</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Cookie Policy</Link></li>
             </ul>
           </div>
         </div>
