@@ -1,6 +1,7 @@
 import { unifiedFeed } from "@/lib/mock-data";
 import { Twitter, Linkedin, Github, MessageSquare, Heart, Repeat2, ExternalLink, Slack, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { memo } from "react";
 
 const platformIcons = {
   x: Twitter,
@@ -18,7 +19,12 @@ const platformColors = {
   discord: "text-[#5865F2] bg-[#5865F2]/10",
 };
 
-export function UnifiedFeed() {
+// ⚡ Bolt Optimization:
+// Wrapped the UnifiedFeed component in React.memo().
+// It imports its data directly and receives no props, making it a pure presentation component.
+// Without memo, it would re-render its list every time DashboardPage updates.
+// Expected Impact: Prevents O(N) map operations from running unnecessarily, significantly reducing main thread blocking during parent updates.
+export const UnifiedFeed = memo(function UnifiedFeed() {
   return (
     <div className="glass-panel-heavy rounded-3xl p-6 md:p-8 flex flex-col h-full">
       <div className="flex items-center justify-between mb-8">
@@ -114,4 +120,4 @@ export function UnifiedFeed() {
       </button>
     </div>
   );
-}
+});

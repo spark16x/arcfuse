@@ -1,6 +1,7 @@
 import { stats } from "@/lib/mock-data";
-import { ArrowUpRight, TrendingUp, Users, MessageCircle, Share2, Activity, Bell, Smartphone, Target } from "lucide-react";
+import { ArrowUpRight, TrendingUp, Activity, Bell, Smartphone, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { memo } from "react";
 
 const metrics = [
   { label: "Connected Apps", value: stats.connectedApps, change: "+2", trend: "up", icon: Smartphone },
@@ -9,7 +10,12 @@ const metrics = [
   { label: "Productivity", value: stats.productivityScore, change: "+5%", trend: "up", icon: Target },
 ];
 
-export function OverviewCards() {
+// ⚡ Bolt Optimization:
+// Wrapped the OverviewCards component in React.memo().
+// Because it receives no props and loops through static data, it shouldn't re-render
+// just because its parent (DashboardPage) might re-render from state changes.
+// Expected Impact: Reduces unnecessary React rendering cycles for this component subtree by 100% when parent state changes.
+export const OverviewCards = memo(function OverviewCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {metrics.map((metric, index) => {
@@ -57,4 +63,4 @@ export function OverviewCards() {
       })}
     </div>
   );
-}
+});
