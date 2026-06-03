@@ -5,6 +5,12 @@ import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 
+async function getOrigin() {
+  const { headers } = await import('next/headers')
+  const headersList = await headers()
+  return headersList.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+}
+
 export async function login(formData) {
   const supabase = await createClient()
 
@@ -48,10 +54,7 @@ export async function signup(formData) {
 export async function loginWithGithub() {
   const supabase = await createClient()
 
-  // We use headers to get the origin for redirect URL
-  const { headers } = await import('next/headers')
-  const headersList = await headers()
-  const origin = headersList.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const origin = await getOrigin()
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
@@ -68,10 +71,7 @@ export async function loginWithGithub() {
 export async function loginWithDiscord() {
   const supabase = await createClient()
 
-  // We use headers to get the origin for redirect URL
-  const { headers } = await import('next/headers')
-  const headersList = await headers()
-  const origin = headersList.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const origin = await getOrigin()
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'discord',
