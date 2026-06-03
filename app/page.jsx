@@ -5,22 +5,27 @@ import Link from 'next/link';
 
 export default function Home() {
   useEffect(() => {
-    function reveal() {
-      var reveals = document.querySelectorAll(".reveal");
-      for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 150;
-        if (elementTop < windowHeight - elementVisible) {
-          reveals[i].classList.add("active");
-        }
-      }
-    }
-    window.addEventListener("scroll", reveal);
-    reveal();
+    // ⚡ Bolt: Use IntersectionObserver to avoid layout thrashing from getBoundingClientRect in a scroll event
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target); // Optional: stop observing once revealed
+          }
+        });
+      },
+      { rootMargin: '0px 0px -150px 0px' }
+    );
 
-    const handleScroll = () => {
-      const header = document.querySelector('header');
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach((el) => observer.observe(el));
+
+    // ⚡ Bolt: Cache DOM query and use requestAnimationFrame for scroll events to avoid layout thrashing
+    const header = document.querySelector('header');
+    let ticking = false;
+
+    const updateHeader = () => {
       if (window.scrollY > 50) {
         header.classList.add('py-2', 'shadow-sm');
         header.classList.remove('py-4');
@@ -28,12 +33,22 @@ export default function Home() {
         header.classList.remove('py-2', 'shadow-sm');
         header.classList.add('py-4');
       }
+      ticking = false;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      if (!ticking && header) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    };
+
+    // ⚡ Bolt: use passive: true to not block scrolling
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => {
-        window.removeEventListener('scroll', reveal);
-        window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
