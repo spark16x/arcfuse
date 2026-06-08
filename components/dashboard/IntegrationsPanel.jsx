@@ -18,7 +18,11 @@ export function IntegrationsPanel() {
           <Link2 className="w-5 h-5 text-primary" />
           Connections
         </h3>
-        <button className="w-8 h-8 rounded-full bg-surface-200 flex items-center justify-center text-muted-foreground hover:bg-primary/20 hover:text-primary transition-colors">
+        <button
+          className="w-8 h-8 rounded-full bg-surface-200 flex items-center justify-center text-muted-foreground hover:bg-primary/20 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          aria-label="Add new connection"
+          title="Add new connection"
+        >
           <Plus className="w-4 h-4" />
         </button>
       </div>
@@ -33,14 +37,18 @@ export function IntegrationsPanel() {
               <span className="text-sm font-medium text-foreground">{service.name}</span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" title={`Status: ${service.status}`}>
+              <span className="sr-only">Status: {service.status}</span>
               {service.status === "syncing" && (
-                 <Sparkles className="w-3 h-3 text-primary animate-pulse" />
+                 <Sparkles className="w-3 h-3 text-primary animate-pulse" aria-hidden="true" />
               )}
-              <span className={cn(
-                "w-2 h-2 rounded-full",
-                service.status === "active" ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" : "bg-primary animate-pulse shadow-glow-primary"
-              )}></span>
+              <span
+                className={cn(
+                  "w-2 h-2 rounded-full",
+                  service.status === "active" ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" : "bg-primary animate-pulse shadow-glow-primary"
+                )}
+                aria-hidden="true"
+              ></span>
             </div>
           </div>
         ))}
