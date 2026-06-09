@@ -1,6 +1,6 @@
 import { PenSquare, Send, Zap } from "lucide-react";
 
-export function QuickActions() {
+export function QuickActions({ onCompose, onSchedule, onScheduleDraft }) {
   return (
     <div className="glass-panel-heavy rounded-3xl p-6 border border-glass-border">
       <h3 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
@@ -9,14 +9,20 @@ export function QuickActions() {
       </h3>
 
       <div className="grid grid-cols-2 gap-3">
-        <button className="flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-100 border border-glass-border hover:bg-primary/10 hover:border-primary/30 transition-all group">
+        <button 
+          onClick={onCompose}
+          className="flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-100 border border-glass-border hover:bg-primary/10 hover:border-primary/30 transition-all group"
+        >
           <div className="w-10 h-10 rounded-full bg-surface-200 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
              <PenSquare className="w-5 h-5 text-primary" />
           </div>
           <span className="text-xs font-semibold text-foreground">Compose</span>
         </button>
 
-        <button className="flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-100 border border-glass-border hover:bg-primary/10 hover:border-primary/30 transition-all group">
+        <button 
+          onClick={onSchedule}
+          className="flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-100 border border-glass-border hover:bg-primary/10 hover:border-primary/30 transition-all group"
+        >
           <div className="w-10 h-10 rounded-full bg-surface-200 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
              <Send className="w-5 h-5 text-primary" />
           </div>
@@ -31,7 +37,10 @@ export function QuickActions() {
             AI Suggestion
          </p>
          <p className="text-sm text-foreground mb-3 leading-snug">&quot;Best time to post on LinkedIn today is 2:00 PM EST.&quot;</p>
-         <button className="text-xs font-bold bg-primary text-black px-3 py-1.5 rounded-lg hover:bg-primary-hover w-full transition-colors">
+         <button 
+           onClick={onScheduleDraft}
+           className="text-xs font-bold bg-primary text-black px-3 py-1.5 rounded-lg hover:bg-primary-hover w-full transition-all active:scale-95"
+         >
             Schedule Draft
          </button>
       </div>

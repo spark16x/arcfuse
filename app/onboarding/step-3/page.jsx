@@ -117,7 +117,11 @@ export default function Step3() {
               <div className="sticky top-24">
                 <p className="font-label-md text-label-md font-semibold text-outline mb-md uppercase tracking-wider">Preview</p>
                 <div
-                  className={`relative overflow-hidden bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-xl transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isClient ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                  className={`relative overflow-hidden bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-xl transition-all ${isClient ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                  style={{
+                    transitionDuration: '600ms',
+                    transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
                   id="preview-card"
                 >
                   <div className="flex flex-col items-center text-center gap-md relative z-10">

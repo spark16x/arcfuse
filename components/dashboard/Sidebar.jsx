@@ -12,23 +12,26 @@ import {
   Search
 } from "lucide-react";
 
-export function Sidebar({ className, isMobile }) {
+export function Sidebar({ className, isMobile, activeView = "overview", setActiveView, onOpenSearch, onOpenAI }) {
   const navItems = [
-    { label: "Overview", href: "/dashboard", icon: LayoutDashboard, active: true },
-    { label: "Integrations", href: "#", icon: Cable, active: false },
-    { label: "Activity", href: "#", icon: ActivitySquare, active: false },
-    { label: "Messages", href: "#", icon: MessageSquare, active: false },
+    { label: "Overview", view: "overview", icon: LayoutDashboard },
+    { label: "Integrations", view: "integrations", icon: Cable },
+    { label: "Activity", view: "activity", icon: ActivitySquare },
+    { label: "Messages", view: "messages", icon: MessageSquare },
   ];
 
   const secondaryNavItems = [
-    { label: "Settings", href: "#", icon: Settings, active: false },
+    { label: "Settings", view: "settings", icon: Settings },
   ];
 
   return (
     <aside className={cn("flex flex-col h-screen glass-panel-heavy border-r-0 border-r border-glass-border w-72 p-4 pt-6 transition-all", className)}>
 
       {/* Brand */}
-      <div className="flex items-center gap-3 px-3 mb-8 cursor-pointer group">
+      <div 
+        onClick={() => setActiveView?.("overview")}
+        className="flex items-center gap-3 px-3 mb-8 cursor-pointer group"
+      >
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shadow-glow-primary group-hover:shadow-glow-primary-lg transition-all duration-300 relative overflow-hidden">
           <div className="absolute inset-0 bg-white/20 blur-md transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
           <span className="text-black font-black text-2xl leading-none relative z-10 tracking-tighter">A</span>
@@ -41,7 +44,10 @@ export function Sidebar({ className, isMobile }) {
 
       {/* Search Bar - Linear style */}
       <div className="px-3 mb-6">
-        <button className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg bg-surface-200 border border-glass-border text-muted-foreground hover:bg-surface-300 hover:text-foreground transition-all text-sm group">
+        <button 
+          onClick={onOpenSearch}
+          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg bg-surface-200 border border-glass-border text-muted-foreground hover:bg-surface-300 hover:text-foreground transition-all text-sm group"
+        >
           <Search className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
           <span className="flex-1 text-left">Search...</span>
           <kbd className="hidden sm:inline-flex h-5 items-center gap-1 rounded border border-glass-border bg-surface-100 px-1.5 font-mono text-[10px] font-medium opacity-100">
@@ -53,27 +59,33 @@ export function Sidebar({ className, isMobile }) {
       {/* Primary Navigation */}
       <div className="px-2 mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Menu</div>
       <nav className="flex-1 space-y-1">
-        {navItems.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group relative overflow-hidden",
-              item.active
-                ? "text-primary bg-primary/10 shadow-glass-inset"
-                : "text-muted-foreground hover:bg-surface-200 hover:text-foreground"
-            )}
-          >
-            {item.active && (
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 bg-primary rounded-r-full shadow-glow-primary"></div>
-            )}
-            <item.icon className={cn("w-5 h-5 transition-colors", item.active ? "text-primary" : "text-muted-foreground group-hover:text-foreground")} />
-            {item.label}
-          </Link>
-        ))}
+        {navItems.map((item) => {
+          const isActive = activeView === item.view;
+          return (
+            <button
+              key={item.label}
+              onClick={() => setActiveView?.(item.view)}
+              className={cn(
+                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group relative overflow-hidden text-left",
+                isActive
+                  ? "text-primary bg-primary/10 shadow-glass-inset"
+                  : "text-muted-foreground hover:bg-surface-200 hover:text-foreground"
+              )}
+            >
+              {isActive && (
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 bg-primary rounded-r-full shadow-glow-primary"></div>
+              )}
+              <item.icon className={cn("w-5 h-5 transition-colors", isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground")} />
+              {item.label}
+            </button>
+          );
+        })}
 
         {/* AI Assistant Callout */}
-        <div className="mt-8 mb-4 px-3 py-4 rounded-xl bg-gradient-to-b from-surface-200 to-surface-100 border border-glass-border relative overflow-hidden group cursor-pointer hover:border-primary/30 transition-colors">
+        <div 
+          onClick={onOpenAI}
+          className="mt-8 mb-4 px-3 py-4 rounded-xl bg-gradient-to-b from-surface-200 to-surface-100 border border-glass-border relative overflow-hidden group cursor-pointer hover:border-primary/30 transition-colors"
+        >
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/20 transition-colors"></div>
             <div className="flex items-center gap-2 mb-2 relative z-10">
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
@@ -85,16 +97,24 @@ export function Sidebar({ className, isMobile }) {
 
       {/* Secondary Navigation */}
       <div className="mb-4 space-y-1">
-        {secondaryNavItems.map((item) => (
-           <Link
-             key={item.label}
-             href={item.href}
-             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-muted-foreground hover:bg-surface-200 hover:text-foreground group"
-           >
-             <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-foreground" />
-             {item.label}
-           </Link>
-        ))}
+        {secondaryNavItems.map((item) => {
+          const isActive = activeView === item.view;
+          return (
+             <button
+               key={item.label}
+               onClick={() => setActiveView?.(item.view)}
+               className={cn(
+                 "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left group",
+                 isActive
+                   ? "text-primary bg-primary/10 shadow-glass-inset"
+                   : "text-muted-foreground hover:bg-surface-200 hover:text-foreground"
+               )}
+             >
+               <item.icon className={cn("w-5 h-5 transition-colors", isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground")} />
+               {item.label}
+             </button>
+          );
+        })}
       </div>
 
       {/* User Profile */}

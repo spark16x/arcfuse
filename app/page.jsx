@@ -1,9 +1,46 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function Home() {
+  const [toast, setToast] = useState(null);
+  const [votes, setVotes] = useState({
+    threads: 845,
+    bluesky: 512,
+    mastodon: 320,
+  });
+  const [voted, setVoted] = useState({
+    threads: false,
+    bluesky: false,
+    mastodon: false,
+  });
+
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+  };
+
+  const handleVote = (key, name) => {
+    if (voted[key]) {
+      setVotes(prev => ({ ...prev, [key]: prev[key] - 1 }));
+      setVoted(prev => ({ ...prev, [key]: false }));
+      showToast(`Removed vote for ${name}`, 'info');
+    } else {
+      setVotes(prev => ({ ...prev, [key]: prev[key] + 1 }));
+      setVoted(prev => ({ ...prev, [key]: true }));
+      showToast(`Voted for ${name}!`, 'success');
+    }
+  };
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
   useEffect(() => {
     // ⚡ Bolt: Use IntersectionObserver to avoid layout thrashing from getBoundingClientRect in a scroll event
     const observer = new IntersectionObserver(
@@ -57,19 +94,19 @@ export default function Home() {
       {/* TopNavBar */}
       <header className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant transition-all duration-300 py-4">
         <nav className="max-w-7xl mx-auto flex justify-between items-center px-gutter">
-          <div className="flex items-center gap-base">
+          <Link href="/" className="flex items-center gap-base hover:opacity-85 transition-opacity">
             <img alt="Arcfuse Logo" className="w-8 h-8 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiFo650op9J-PLLPrXKPoQV496QWchDdyF-_zAx-nQaiEdouhqVgJfca4qfnJ-cEKTJA-6mIZmIvEZD2mzqxIxd_8Mlah32M28CxuhhMrt-4X4LWtcyMvUE7sMx0QjXngqnR3qNLZoiJoi2eiB0Hx7uxj92NEv7ZMQCkcJRyb-IWj98dhZS4W-miHrjVlZoiHTeCl-Qy4e7kFC7FpT6V5f_Nz4MsOgvyAhspo1YxqsovNmSCypEYNN730i0Wkruigt8a4k3kUifYI" />
             <span className="font-headline-md text-headline-md font-bold text-on-surface">Arcfuse</span>
-          </div>
+          </Link>
           <div className="hidden md:flex gap-lg items-center">
-            <Link className="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Dashboard</Link>
-            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Platforms</Link>
-            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Community</Link>
-            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#">Contributors</Link>
-            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-xs" href="#">GitHub <span className="material-symbols-outlined text-[16px]">open_in_new</span></Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="/dashboard">Dashboard</Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#platforms">Platforms</Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#community">Community</Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md" href="#contributors">Contributors</Link>
+            <Link className="text-secondary hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-xs" href="https://github.com/arcfuse/arcfuse" target="_blank" rel="noopener noreferrer">GitHub <span className="material-symbols-outlined text-[16px]">open_in_new</span></Link>
           </div>
           <div>
-            <button className="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">Get Started</button>
+            <Link href="/signup" className="inline-block bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all text-center">Get Started</Link>
           </div>
         </nav>
       </header>
@@ -85,12 +122,12 @@ export default function Home() {
             <h1 className="font-display-lg text-display-lg mb-md text-on-surface">The Open Source Standard for <span className="text-primary-container">Multi-Platform</span> Social Media</h1>
             <p className="font-body-lg text-body-lg text-secondary mb-lg max-w-[540px]">Schedule, manage, and analyze your social presence across X, Instagram, LinkedIn, and TikTok with a single, community-driven dashboard.</p>
             <div className="flex flex-col sm:flex-row gap-md">
-              <button className="bg-primary-container text-on-primary-container px-8 py-4 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm shadow-lg hover:shadow-xl transition-all">
+              <Link href="/dashboard" className="bg-primary-container text-on-primary-container px-8 py-4 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm shadow-lg hover:shadow-xl transition-all">
                 Launch Dashboard <span className="material-symbols-outlined">rocket_launch</span>
-              </button>
-              <button className="bg-white border border-outline-variant text-on-surface px-8 py-4 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm hover:bg-surface transition-all">
+              </Link>
+              <Link href="https://github.com/arcfuse/arcfuse" target="_blank" rel="noopener noreferrer" className="bg-white border border-outline-variant text-on-surface px-8 py-4 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm hover:bg-surface transition-all">
                 View Codebase <span className="material-symbols-outlined">code</span>
-              </button>
+              </Link>
             </div>
           </div>
           <div className="relative hidden lg:block reveal" style={{ transitionDelay: '200ms' }}>
@@ -121,7 +158,7 @@ export default function Home() {
       </section>
 
       {/* Trust / Stats Section */}
-      <section className="py-lg bg-surface-container-lowest border-y border-outline-variant">
+      <section id="contributors" className="py-lg bg-surface-container-lowest border-y border-outline-variant">
         <div className="max-w-7xl mx-auto px-gutter">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-lg text-center mb-xl">
             <div className="reveal">
@@ -265,69 +302,101 @@ export default function Home() {
               <span className="text-xs bg-white/20 px-2 py-1 rounded">Active Voting</span>
             </div>
             <div className="space-y-md">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all cursor-pointer">
+              <div 
+                onClick={() => handleVote('threads', 'Threads API Support')}
+                className={`p-4 rounded-xl bg-white/5 border flex justify-between items-center transition-all cursor-pointer hover:bg-white/10 ${voted.threads ? 'border-primary-fixed' : 'border-white/10'}`}
+              >
                 <span className="font-label-md">Threads API Support</span>
                 <div className="flex items-center gap-sm">
-                  <span className="material-symbols-outlined text-primary-fixed" data-weight="fill">thumb_up</span>
-                  <span>845</span>
+                  <span className={`material-symbols-outlined ${voted.threads ? 'text-primary-fixed' : 'text-white/60'}`} data-weight={voted.threads ? "fill" : "normal"}>thumb_up</span>
+                  <span className={voted.threads ? 'text-primary-fixed font-bold' : ''}>{votes.threads}</span>
                 </div>
               </div>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all cursor-pointer">
+              <div 
+                onClick={() => handleVote('bluesky', 'Bluesky Integration')}
+                className={`p-4 rounded-xl bg-white/5 border flex justify-between items-center transition-all cursor-pointer hover:bg-white/10 ${voted.bluesky ? 'border-primary-fixed' : 'border-white/10'}`}
+              >
                 <span className="font-label-md">Bluesky Integration</span>
                 <div className="flex items-center gap-sm">
-                  <span className="material-symbols-outlined">thumb_up</span>
-                  <span>512</span>
+                  <span className={`material-symbols-outlined ${voted.bluesky ? 'text-primary-fixed' : 'text-white/60'}`} data-weight={voted.bluesky ? "fill" : "normal"}>thumb_up</span>
+                  <span className={voted.bluesky ? 'text-primary-fixed font-bold' : ''}>{votes.bluesky}</span>
                 </div>
               </div>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all cursor-pointer">
+              <div 
+                onClick={() => handleVote('mastodon', 'Mastodon Bridge')}
+                className={`p-4 rounded-xl bg-white/5 border flex justify-between items-center transition-all cursor-pointer hover:bg-white/10 ${voted.mastodon ? 'border-primary-fixed' : 'border-white/10'}`}
+              >
                 <span className="font-label-md">Mastodon Bridge</span>
                 <div className="flex items-center gap-sm">
-                  <span className="material-symbols-outlined">thumb_up</span>
-                  <span>320</span>
+                  <span className={`material-symbols-outlined ${voted.mastodon ? 'text-primary-fixed' : 'text-white/60'}`} data-weight={voted.mastodon ? "fill" : "normal"}>thumb_up</span>
+                  <span className={voted.mastodon ? 'text-primary-fixed font-bold' : ''}>{votes.mastodon}</span>
                 </div>
               </div>
             </div>
-            <button className="w-full mt-md bg-white text-on-surface py-3 rounded-lg font-bold hover:bg-primary-fixed transition-all">View Full Roadmap</button>
+            <button 
+              onClick={() => showToast('Full roadmap interface coming soon!', 'info')}
+              className="w-full mt-md bg-white text-on-surface py-3 rounded-lg font-bold hover:bg-primary-fixed hover:text-white transition-all active:scale-95"
+            >
+              View Full Roadmap
+            </button>
           </div>
         </div>
       </section>
 
       {/* Platform Support */}
-      <section className="py-xl bg-surface">
+      <section id="platforms" className="py-xl bg-surface">
         <div className="max-w-7xl mx-auto px-gutter">
           <h2 className="font-headline-lg text-headline-lg mb-xl reveal">Platform Support</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-md">
-            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal">
+            <div 
+              onClick={() => showToast('Twitter / X integration is active!', 'info')}
+              className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal active:scale-95"
+            >
               <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
                 <span className="material-symbols-outlined text-primary">tag</span>
               </div>
               <span className="font-bold">Twitter / X</span>
             </div>
-            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '100ms' }}>
+            <div 
+              onClick={() => showToast('Instagram integration is active!', 'info')}
+              className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal active:scale-95" style={{ transitionDelay: '100ms' }}
+            >
               <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
                 <span className="material-symbols-outlined text-primary">camera_alt</span>
               </div>
               <span className="font-bold">Instagram</span>
             </div>
-            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '200ms' }}>
+            <div 
+              onClick={() => showToast('LinkedIn integration is active!', 'info')}
+              className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal active:scale-95" style={{ transitionDelay: '200ms' }}
+            >
               <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
                 <span className="material-symbols-outlined text-primary">work</span>
               </div>
               <span className="font-bold">LinkedIn</span>
             </div>
-            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '300ms' }}>
+            <div 
+              onClick={() => showToast('TikTok integration is active!', 'info')}
+              className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal active:scale-95" style={{ transitionDelay: '300ms' }}
+            >
               <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
                 <span className="material-symbols-outlined text-primary">movie</span>
               </div>
               <span className="font-bold">TikTok</span>
             </div>
-            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '400ms' }}>
+            <div 
+              onClick={() => showToast('YouTube integration is active!', 'info')}
+              className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal active:scale-95" style={{ transitionDelay: '400ms' }}
+            >
               <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
                 <span className="material-symbols-outlined text-primary">play_circle</span>
               </div>
               <span className="font-bold">YouTube</span>
             </div>
-            <div className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal" style={{ transitionDelay: '500ms' }}>
+            <div 
+              onClick={() => showToast('Threads integration is active!', 'info')}
+              className="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:shadow-lg transition-all cursor-pointer group reveal active:scale-95" style={{ transitionDelay: '500ms' }}
+            >
               <div className="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-primary-fixed transition-colors">
                 <span className="material-symbols-outlined text-primary">alternate_email</span>
               </div>
@@ -338,13 +407,18 @@ export default function Home() {
       </section>
 
       {/* Community Showcase */}
-      <section className="py-xl max-w-7xl mx-auto px-gutter">
+      <section id="community" className="py-xl max-w-7xl mx-auto px-gutter">
         <div className="flex flex-col md:flex-row justify-between items-end mb-xl reveal">
           <div>
             <h2 className="font-headline-lg text-headline-lg mb-sm">Community Showcase</h2>
             <p className="text-secondary font-body-md text-body-md">What's happening right now in the Arcfuse ecosystem.</p>
           </div>
-          <button className="mt-md md:mt-0 text-primary font-bold flex items-center gap-xs">View all activity <span className="material-symbols-outlined">arrow_forward</span></button>
+          <button 
+            onClick={() => showToast('Loading community activity feed...', 'info')}
+            className="mt-md md:mt-0 text-primary font-bold flex items-center gap-xs hover:underline transition-all active:scale-95"
+          >
+            View all activity <span className="material-symbols-outlined">arrow_forward</span>
+          </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
           <div className="border border-outline-variant rounded-2xl p-6 hover:bg-surface transition-all reveal">
@@ -399,8 +473,20 @@ export default function Home() {
             <h2 className="font-display-lg text-display-lg text-white mb-md">Build the Future of Social Media Management</h2>
             <p className="text-primary-fixed font-body-lg text-body-lg mb-xl max-w-2xl mx-auto">Join thousands of developers building a transparent, open-source alternative for social media automation.</p>
             <div className="flex flex-col sm:flex-row gap-md justify-center">
-              <button className="bg-white text-primary px-8 py-4 rounded-lg font-bold hover:bg-primary-fixed transition-all">Join Community</button>
-              <button className="bg-primary text-white border border-white/20 px-8 py-4 rounded-lg font-bold hover:bg-primary/80 transition-all">Start Contributing</button>
+              <button 
+                onClick={() => showToast('Opening Discord invitation...', 'info')}
+                className="bg-white text-primary px-8 py-4 rounded-lg font-bold hover:bg-primary-fixed hover:text-white transition-all active:scale-95"
+              >
+                Join Community
+              </button>
+              <Link 
+                href="https://github.com/arcfuse/arcfuse" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-primary text-white border border-white/20 px-8 py-4 rounded-lg font-bold hover:bg-primary/80 transition-all active:scale-95 inline-flex items-center justify-center text-center"
+              >
+                Start Contributing
+              </Link>
             </div>
           </div>
         </div>
@@ -420,31 +506,45 @@ export default function Home() {
           <div>
             <h4 className="font-label-md text-label-md font-bold mb-md">Product</h4>
             <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Dashboard</Link></li>
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Platforms</Link></li>
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Integrations</Link></li>
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Analytics</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="/dashboard">Dashboard</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#platforms">Platforms</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="#platforms">Integrations</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="/dashboard">Analytics</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-label-md text-label-md font-bold mb-md">Community</h4>
-            <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Contributors</Link></li>
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">GitHub Repo</Link></li>
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Discord</Link></li>
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Plugins</Link></li>
+            <ul className="space-y-sm text-secondary font-body-sm text-body-sm text-left">
+              <li><Link className="hover:text-primary hover:underline transition-all block w-full text-left" href="#contributors">Contributors</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all block w-full text-left" href="https://github.com/arcfuse/arcfuse" target="_blank" rel="noopener noreferrer">GitHub Repo</Link></li>
+              <li><button onClick={() => showToast('Opening Discord invitation...', 'info')} className="hover:text-primary hover:underline transition-all block w-full text-left">Discord</button></li>
+              <li><button onClick={() => showToast('Plugin ecosystem details coming soon!', 'info')} className="hover:text-primary hover:underline transition-all block w-full text-left">Plugins</button></li>
             </ul>
           </div>
           <div>
             <h4 className="font-label-md text-label-md font-bold mb-md">Legal</h4>
             <ul className="space-y-sm text-secondary font-body-sm text-body-sm">
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</Link></li>
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Terms of Service</Link></li>
-              <li><Link className="hover:text-primary hover:underline transition-all" href="#">Cookie Policy</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="/privacy-policy">Privacy Policy</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="/terms-of-service">Terms of Service</Link></li>
+              <li><Link className="hover:text-primary hover:underline transition-all" href="/privacy-policy">Cookie Policy</Link></li>
             </ul>
           </div>
         </div>
       </footer>
+
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-sm px-6 py-4 rounded-xl shadow-2xl border transition-all duration-300 transform translate-y-0 opacity-100 ${
+          toast.type === 'success' 
+            ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
+            : 'bg-blue-50 border-blue-200 text-blue-800'
+        }`}>
+          <span className="material-symbols-outlined">
+            {toast.type === 'success' ? 'check_circle' : 'info'}
+          </span>
+          <span className="font-label-md text-label-md font-semibold">{toast.message}</span>
+        </div>
+      )}
     </div>
   );
 }

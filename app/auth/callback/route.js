@@ -5,33 +5,38 @@ import { createClient } from '@/utils/supabase/server'
 export async function GET(request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  // if "next" is in param, use it as the redirect URL
-  const next = searchParams.get('next') ?? '/'
+  // If "next" is in param, use it as the redirect URL, defaulting to /dashboard
+  const next = searchParams.get('next') ?? '/dashboard'
 
   // Sanitize next to prevent open redirect vulnerabilities
-  // Ensure it starts with a single slash and prevents protocol-relative URLs (e.g. //attacker.com)
-  const safeNext = (next || '/').replace(/^[/\\]+/, '/')
+  let safeNext = next
+  try {
+    // If it's a full URL, only extract pathname + search query
+    const parsedUrl = new URL(next)
+    safeNext = parsedUrl.pathname + parsedUrl.search
+  } catch (e) {
+    // Next is already a relative path
+  }
 
-  // Ensure the path actually starts with a slash after stripping (in case next was empty)
-  const finalSafeNext = safeNext.startsWith('/') ? safeNext : '/' + safeNext
+  // Ensure it starts with a single '/' and not '//' to prevent protocol-relative redirects
+  if (!safeNext.startsWith('/')) {
+    safeNext = '/' + safeNext
+  }
+  const finalSafeNext = safeNext.replace(/^\/+/, '/')
 
   if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
       const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
-      const isLocalEnv = process.env.NODE_ENV === 'development'
-      if (isLocalEnv) {
-        // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
-        return NextResponse.redirect(`${origin}${finalSafeNext}`)
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${finalSafeNext}`)
-      } else {
-        return NextResponse.redirect(`${origin}${finalSafeNext}`)
-      }
+      const forwardedProto = request.headers.get('x-forwarded-proto') || 'https'
+      const redirectUrl = forwardedHost 
+        ? `${forwardedProto}://${forwardedHost}${finalSafeNext}`
+        : `${origin}${finalSafeNext}`
+      return NextResponse.redirect(redirectUrl)
     }
   }
 
-  // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+  // return the user to the login page with an error parameter
+  return NextResponse.redirect(`${origin}/login?error=Could not exchange authentication code for session`)
 }

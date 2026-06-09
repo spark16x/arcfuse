@@ -3,19 +3,20 @@ import { ArrowUpRight, TrendingUp, Activity, Bell, Smartphone, Target } from "lu
 import { cn } from "@/lib/utils";
 import { memo } from "react";
 
-const metrics = [
-  { label: "Connected Apps", value: stats.connectedApps, change: "+2", trend: "up", icon: Smartphone },
-  { label: "Alerts Today", value: stats.notificationsToday, change: "+12%", trend: "up", icon: Bell },
-  { label: "Active Sessions", value: stats.activeSessions, change: "Stable", trend: "up", icon: Activity },
-  { label: "Productivity", value: stats.productivityScore, change: "+5%", trend: "up", icon: Target },
-];
 
 // ⚡ Bolt Optimization:
 // Wrapped the OverviewCards component in React.memo().
 // Because it receives no props and loops through static data, it shouldn't re-render
 // just because its parent (DashboardPage) might re-render from state changes.
 // Expected Impact: Reduces unnecessary React rendering cycles for this component subtree by 100% when parent state changes.
-export const OverviewCards = memo(function OverviewCards() {
+export const OverviewCards = memo(function OverviewCards({ connectionsCount, notificationsCount }) {
+  const metrics = [
+    { label: "Connected Apps", value: connectionsCount !== undefined ? connectionsCount : stats.connectedApps, change: "+2", trend: "up", icon: Smartphone },
+    { label: "Alerts Today", value: notificationsCount !== undefined ? notificationsCount : stats.notificationsToday, change: "+12%", trend: "up", icon: Bell },
+    { label: "Active Sessions", value: stats.activeSessions, change: "Stable", trend: "up", icon: Activity },
+    { label: "Productivity", value: stats.productivityScore, change: "+5%", trend: "up", icon: Target },
+  ];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {metrics.map((metric, index) => {

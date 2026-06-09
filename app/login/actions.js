@@ -8,7 +8,12 @@ import { createClient } from '@/utils/supabase/server'
 async function getOrigin() {
   const { headers } = await import('next/headers')
   const headersList = await headers()
-  return headersList.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const host = headersList.get('host')
+  const proto = headersList.get('x-forwarded-proto') || (process.env.NODE_ENV === 'production' ? 'https' : 'http')
+  if (host) {
+    return `${proto}://${host}`
+  }
+  return process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 }
 
 export async function login(formData) {

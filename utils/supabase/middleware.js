@@ -53,7 +53,8 @@ export async function updateSession(request) {
 
   if (
     !user &&
-    request.nextUrl.pathname.startsWith('/dashboard')
+    request.nextUrl.pathname.startsWith('/dashboard') &&
+    process.env.NODE_ENV !== 'development'
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()
