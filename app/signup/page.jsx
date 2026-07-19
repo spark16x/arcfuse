@@ -1,8 +1,11 @@
 import { GalleryVerticalEnd } from "lucide-react"
+import { AuthForm } from "@/components/auth-form.jsx"
 
-import { SignupForm } from "../../components/signup-form.jsx"
+export default async function SignupPage({ searchParams }) {
+  const params = await searchParams
+  const error = params?.error ? decodeURIComponent(params.error) : null
+  const message = params?.message ? decodeURIComponent(params.message) : null
 
-export default function SignupPage() {
   return (
     <div className="bg-[var(--muted)] flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -12,7 +15,7 @@ export default function SignupPage() {
           </div>
          Arcfuse
         </a>
-        <SignupForm />
+        <AuthForm error={error} message={message} initialMode="signup" />
       </div>
     </div>
   )

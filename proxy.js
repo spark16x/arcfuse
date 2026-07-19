@@ -1,7 +1,19 @@
-import { updateSession } from '@/utils/supabase/middleware'
+import { auth } from "@/auth"
 
 export async function proxy(request) {
-  return await updateSession(request)
+  const session = await auth()
+  const isLoggedIn = !!session
+  
+  const nextUrl = request.nextUrl
+  const isOnDashboard = nextUrl.pathname.startsWith('/dashboard') || nextUrl.pathname.startsWith('/onboarding')
+  const isOnAuth = nextUrl.pathname === '/login' || nextUrl.pathname === '/signup'
+
+  if (isOnDashboard && !isLoggedIn) {
+    return Response.redirect(new URL('/login', nextUrl))
+  }
+  if (isOnAuth && isLoggedIn) {
+    return Response.redirect(new URL('/dashboard', nextUrl))
+  }
 }
 
 export const config = {

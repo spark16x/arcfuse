@@ -1,6 +1,33 @@
+'use client';
+
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Step1() {
+  useEffect(() => {
+    const checkUserOnboarded = async () => {
+      try {
+        const res = await fetch('/api/auth/session');
+        const session = res.ok ? await res.json() : null;
+        if (session?.user) {
+          const userId = session.user.id || session.user.email || "mock-user-id";
+          const inMemoryDb = typeof window !== 'undefined' ? window.__inMemoryDb : null;
+          const workspaceSettings = inMemoryDb?.workspace_settings || [];
+          
+          // Also check localStorage
+          const localSettings = typeof window !== 'undefined' ? localStorage.getItem(`workspace_settings_${userId}`) : null;
+          
+          if (workspaceSettings.some(item => item.user_id === userId) || localSettings) {
+            console.log("User already onboarded, redirecting to dashboard.");
+            window.location.href = '/dashboard';
+          }
+        }
+      } catch (err) {
+        console.error("Error checking workspace settings:", err);
+      }
+    };
+    checkUserOnboarded();
+  }, []);
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden bg-white text-[#151c27] font-['Geist',_sans-serif]">
       {/* Header */}

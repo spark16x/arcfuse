@@ -1,39 +1,49 @@
 {
-  "name": "nextjs",
+  "name": "acrfuse",
   "version": "0.2.1",
   "private": true,
+  "description": "**Arcfuse by Spark** — A unified web experience that brings together multiple social platforms and digital tools in one powerful space.",
+  "homepage": "https://github.com/spark16x/arcfuse#readme",
+  "bugs": {
+    "url": "https://github.com/spark16x/arcfuse/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spark16x/arcfuse.git"
+  },
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "auth.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --experimental-test-module-mocks --test utils/supabase/*.test.js"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "dependencies": {
+    "@auth/neon-adapter": "^1.11.2",
+    "@neondatabase/serverless": "^1.1.0",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-separator": "1.1.7",
     "@radix-ui/react-slot": "^1.0.2",
-    "@supabase/auth-ui-react": "^0.4.7",
-    "@supabase/auth-ui-shared": "^0.1.8",
-    "@supabase/ssr": "^0.10.2",
-    "@supabase/supabase-js": "^2.105.3",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.11",
-    "class-variance-authority": "^0.4.0",
-    "clsx": "^1.2.1",
-    "date-fns": "^4.1.0",
+    "class-variance-authority": "^0.7.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.548.0",
-    "next": "^16.2.2",
-    "next-pwa": "^5.6.0",
+    "next": "^16.2.10",
+    "next-auth": "^5.0.0-beta.31",
     "next-themes": "^0.2.1",
     "playwright": "^1.59.1",
     "radix-ui": "^1.4.3",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "sharp": "^0.31.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6"
   },

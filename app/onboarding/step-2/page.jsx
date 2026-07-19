@@ -8,6 +8,9 @@ export default function Step2() {
 
   const handleRoleSelect = (role) => {
     setSelectedRole(role);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('onboarding_role', role);
+    }
     console.log('Role Selected:', role);
   };
 

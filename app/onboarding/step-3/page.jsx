@@ -7,9 +7,35 @@ export default function Step3() {
   const [workspaceName, setWorkspaceName] = useState('');
   const [workspaceUrl, setWorkspaceUrl] = useState('');
   const [isClient, setIsClient] = useState(false);
+  const [userImage, setUserImage] = useState(null);
+  const [userSession, setUserSession] = useState(null);
 
   useEffect(() => {
     setIsClient(true);
+    const fetchSession = async () => {
+      try {
+        const res = await fetch('/api/auth/session');
+        const session = res.ok ? await res.json() : null;
+        if (session?.user) {
+          setUserSession(session.user);
+          if (session.user.image) {
+            setUserImage(session.user.image);
+          }
+          if (session.user.name && !workspaceName) {
+            setWorkspaceName(session.user.name + "'s Workspace");
+            const slug = session.user.name.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+            setWorkspaceUrl(slug);
+          } else if (session.user.email && !workspaceName) {
+            const emailSlug = session.user.email.split('@')[0];
+            setWorkspaceName(emailSlug + "'s Workspace");
+            setWorkspaceUrl(emailSlug);
+          }
+        }
+      } catch (e) {
+        console.error("Error fetching session:", e);
+      }
+    };
+    fetchSession();
   }, []);
 
   const avatarColors = [
@@ -29,6 +55,48 @@ export default function Step3() {
   const firstChar = displayName.charAt(0).toUpperCase();
   const charCode = firstChar.charCodeAt(0);
   const colorPair = avatarColors[charCode % avatarColors.length];
+
+  const handleCreateWorkspace = async (e) => {
+    e.preventDefault();
+    
+    const userId = userSession?.id || userSession?.email || "mock-user-id";
+    const selectedRole = typeof window !== 'undefined' ? localStorage.getItem('onboarding_role') : null;
+    const finalAvatar = userImage || colorPair.bg;
+
+    const newSettings = {
+      user_id: userId,
+      name: displayName,
+      email: userSession?.email || 'user@example.com',
+      slug: displayUrl,
+      avatar: finalAvatar,
+      role: selectedRole,
+      description: document.getElementById('ws-desc')?.value || '',
+      created_at: new Date().toISOString()
+    };
+
+    // Save to window.__inMemoryDb
+    if (typeof window !== 'undefined') {
+      if (!window.__inMemoryDb) {
+        window.__inMemoryDb = {};
+      }
+      if (!window.__inMemoryDb.workspace_settings) {
+        window.__inMemoryDb.workspace_settings = [];
+      }
+      
+      const list = window.__inMemoryDb.workspace_settings;
+      const idx = list.findIndex(item => item.user_id === userId);
+      if (idx > -1) {
+        list[idx] = { ...list[idx], ...newSettings };
+      } else {
+        list.push(newSettings);
+      }
+
+      // Also persist to localStorage
+      localStorage.setItem(`workspace_settings_${userId}`, JSON.stringify(newSettings));
+    }
+
+    window.location.href = '/onboarding/step-4';
+  };
 
   return (
     <div className="bg-surface text-on-surface min-h-screen flex flex-col font-['Geist',_sans-serif]">
@@ -107,9 +175,12 @@ export default function Step3() {
                 <Link href="/onboarding/step-2" className="font-label-md text-label-md px-lg py-sm rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors">
                   Back
                 </Link>
-                <Link href="/onboarding/step-4" className="font-label-md text-label-md px-lg py-sm rounded-lg bg-primary text-on-primary font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all">
+                <button
+                  onClick={handleCreateWorkspace}
+                  className="font-label-md text-label-md px-lg py-sm rounded-lg bg-primary text-on-primary font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                >
                   Create Workspace
-                </Link>
+                </button>
               </div>
             </div>
 
@@ -125,12 +196,21 @@ export default function Step3() {
                   id="preview-card"
                 >
                   <div className="flex flex-col items-center text-center gap-md relative z-10">
-                    <div
-                      className="w-24 h-24 rounded-full flex items-center justify-center text-headline-lg font-bold shadow-inner transition-colors duration-500"
-                      style={{ backgroundColor: colorPair.bg, color: colorPair.text }}
-                    >
-                      {firstChar}
-                    </div>
+                    {userImage ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={userImage}
+                        alt="Workspace Avatar"
+                        className="w-24 h-24 rounded-full object-cover shadow-inner"
+                      />
+                    ) : (
+                      <div
+                        className="w-24 h-24 rounded-full flex items-center justify-center text-headline-lg font-bold shadow-inner transition-colors duration-500"
+                        style={{ backgroundColor: colorPair.bg, color: colorPair.text }}
+                      >
+                        {firstChar}
+                      </div>
+                    )}
                     <div>
                       <h3 className="font-headline-md text-headline-md text-on-surface">{displayName}</h3>
                       <p className="font-code-sm text-code-sm text-primary mt-xs">arcfuse.app/{displayUrl}</p>

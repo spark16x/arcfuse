@@ -18,6 +18,7 @@ const config = {
     },
     extend: {
       colors: {
+        // Material Design 3 tokens
         "surface-container-lowest": "#ffffff",
         "on-primary-fixed-variant": "#3323cc",
         "secondary-fixed-dim": "#c2c6d3",
@@ -65,6 +66,8 @@ const config = {
         "tertiary-fixed": "#dce2f7",
         "inverse-surface": "#2a313d",
         "on-background": "#151c27",
+
+        // shadcn/dashboard token overrides
         border: "#E5E7EB",
         input: "#E5E7EB",
         ring: "#4F46E5",
@@ -77,6 +80,15 @@ const config = {
         "text-primary": "#111827",
         "text-secondary": "#6B7280",
         "text-muted": "#9CA3AF",
+
+        // Dashboard-specific tokens
+        "surface-100": "#FAFAFA",
+        "surface-200": "#F3F4F6",
+        "surface-300": "#E5E7EB",
+        "glass-border": "rgba(229, 231, 235, 0.8)",
+        "primary-hover": "#4338CA",
+        "muted-foreground": "#6B7280",
+
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -103,6 +115,7 @@ const config = {
         "lg": "0.5rem",
         "xl": "0.75rem",
         "2xl": "1rem",
+        "3xl": "1.5rem",
         "full": "9999px",
         'card': '20px',
       },
@@ -135,6 +148,7 @@ const config = {
       fontSize: {
         "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
         "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
         "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
         "code-sm": ["13px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
         "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
@@ -152,6 +166,9 @@ const config = {
       boxShadow: {
         'card': '0 2px 10px rgba(0, 0, 0, 0.05)',
         'card-hover': '0 8px 30px rgba(0, 0, 0, 0.1)',
+        'glow-primary': '0 0 20px rgba(79, 70, 229, 0.3)',
+        'glow-primary-lg': '0 0 40px rgba(79, 70, 229, 0.5)',
+        'glass-inset': 'inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.05)',
       },
       keyframes: {
         "accordion-down": {
@@ -166,11 +183,16 @@ const config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        "pulse-glow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7", filter: "drop-shadow(0 0 4px rgba(79, 70, 229, 0.6))" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "float": "float 6s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 1s ease-in-out infinite",
       },
     },
   },

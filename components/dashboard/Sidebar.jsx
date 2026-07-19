@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import { mockUser } from "@/lib/mock-data";
 import {
   LayoutDashboard,
@@ -9,7 +10,8 @@ import {
   Settings,
   LogOut,
   Sparkles,
-  Search
+  Search,
+  UserCircle
 } from "lucide-react";
 
 export function Sidebar({ className, isMobile, activeView = "overview", setActiveView, onOpenSearch, onOpenAI }) {
@@ -21,6 +23,7 @@ export function Sidebar({ className, isMobile, activeView = "overview", setActiv
   ];
 
   const secondaryNavItems = [
+    { label: "Account", view: "account", icon: UserCircle },
     { label: "Settings", view: "settings", icon: Settings },
   ];
 
@@ -129,12 +132,13 @@ export function Sidebar({ className, isMobile, activeView = "overview", setActiv
             <p className="text-xs text-muted-foreground truncate">{mockUser.email || 'Pro Plan'}</p>
           </div>
         </div>
-        <form action="/auth/logout" method="post">
-          <button className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium transition-colors text-muted-foreground hover:bg-destructive/10 hover:text-destructive group">
-            <LogOut className="w-4 h-4" />
-            Sign Out
-          </button>
-        </form>
+        <button 
+          onClick={() => signOut({ redirectTo: "/login" })}
+          className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium transition-colors text-muted-foreground hover:bg-destructive/10 hover:text-destructive group cursor-pointer"
+        >
+          <LogOut className="w-4 h-4" />
+          Sign Out
+        </button>
       </div>
     </aside>
   );
