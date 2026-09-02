@@ -1,31 +1,84 @@
-import { useState } from "react";
-import { X, MessageSquare, Server, Check } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, MessageSquare, Server, Check, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function DiscordConnectModal({ isOpen, onClose, onConnect }) {
-  const [guildName, setGuildName] = useState("Spark's server");
-  const [selectedChannels, setSelectedChannels] = useState(["general", "dev-log"]);
-  
+  const [guilds, setGuilds] = useState([]);
+  const [selectedGuildId, setSelectedGuildId] = useState("");
+  const [selectedChannels, setSelectedChannels] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsLoading(true);
+      fetch('/api/discord/guilds')
+        .then(res => res.json())
+        .then(data => {
+          if (data.guilds) {
+            setGuilds(data.guilds);
+            if (data.guilds.length > 0) {
+              setSelectedGuildId(data.guilds[0].id);
+              // Auto-select first channel if available
+              if (data.guilds[0].channels?.length > 0) {
+                 setSelectedChannels([data.guilds[0].channels[0].id]);
+              }
+            }
+          }
+          if (data.error) setError(data.error);
+        })
+        .catch(err => {
+          console.error(err);
+          setError("Failed to fetch Discord servers.");
+        })
+        .finally(() => setIsLoading(false));
+    } else {
+      // Reset state on close
+      setGuilds([]);
+      setSelectedGuildId("");
+      setSelectedChannels([]);
+      setError(null);
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
-  const handleToggleChannel = (ch) => {
-    if (selectedChannels.includes(ch)) {
+  const selectedGuild = guilds.find(g => g.id === selectedGuildId);
+  const availableChannels = selectedGuild?.channels || [];
+
+  const handleGuildChange = (e) => {
+    const newGuildId = e.target.value;
+    setSelectedGuildId(newGuildId);
+    const newGuild = guilds.find(g => g.id === newGuildId);
+    if (newGuild?.channels?.length > 0) {
+      setSelectedChannels([newGuild.channels[0].id]);
+    } else {
+      setSelectedChannels([]);
+    }
+  };
+
+  const handleToggleChannel = (channelId) => {
+    if (selectedChannels.includes(channelId)) {
       if (selectedChannels.length > 1) {
-        setSelectedChannels(prev => prev.filter(c => c !== ch));
+        setSelectedChannels(prev => prev.filter(id => id !== channelId));
       }
     } else {
-      setSelectedChannels(prev => [...prev, ch]);
+      setSelectedChannels(prev => [...prev, channelId]);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const mockGuildId = "1125052227384512592";
-    const mockChannelIds = selectedChannels.map(() => "ch_" + Math.random().toString(36).substr(2, 9));
-    onConnect(guildName, selectedChannels, mockGuildId, mockChannelIds);
-  };
+    if (!selectedGuild) return;
 
-  const channelOptions = ["general", "dev-log", "announcements", "marketing", "random"];
+    // Map selected channel IDs to names for UI purposes
+    const channelNames = selectedChannels.map(id => {
+      const ch = availableChannels.find(c => c.id === id);
+      return ch ? ch.name : id;
+    });
+
+    onConnect(selectedGuild.name, channelNames, selectedGuild.id, selectedChannels);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -53,67 +106,92 @@ export function DiscordConnectModal({ isOpen, onClose, onConnect }) {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Guild Name Input */}
-          <div className="space-y-1.5">
-            <label className="text-[10px] uppercase tracking-wider text-muted-foreground font-extrabold flex items-center gap-1.5">
-              <Server className="w-3.5 h-3.5 text-primary" /> Discord Server Name
-            </label>
-            <input
-              type="text"
-              required
-              value={guildName}
-              onChange={(e) => setGuildName(e.target.value)}
-              placeholder="e.g. Spark's server"
-              className="w-full px-4 py-3 rounded-xl bg-surface-200 border border-glass-border focus:border-primary/50 focus:ring-1 focus:ring-primary/20 text-sm font-semibold outline-none transition-all"
-            />
+        {isLoading ? (
+          <div className="flex justify-center py-8">
+            <Loader2 className="w-8 h-8 animate-spin text-[#5865F2]" />
           </div>
-
-          {/* Channels Selection */}
-          <div className="space-y-2">
-            <label className="text-[10px] uppercase tracking-wider text-muted-foreground font-extrabold">
-              Select Sync Channels
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {channelOptions.map((ch) => {
-                const isSelected = selectedChannels.includes(ch);
-                return (
-                  <button
-                    key={ch}
-                    type="button"
-                    onClick={() => handleToggleChannel(ch)}
-                    className={cn(
-                      "flex items-center justify-between px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left",
-                      isSelected 
-                        ? "bg-[#5865F2]/10 border-[#5865F2]/30 text-[#5865F2]" 
-                        : "bg-surface-200 border-glass-border hover:bg-surface-300 text-muted-foreground hover:text-foreground"
-                    )}
-                  >
-                    <span>#{ch}</span>
-                    {isSelected && <Check className="w-3.5 h-3.5" />}
-                  </button>
-                );
-              })}
+        ) : error ? (
+          <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-500 rounded-xl text-sm mb-4">
+            {error}
+          </div>
+        ) : guilds.length === 0 ? (
+           <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 text-yellow-500 rounded-xl text-sm mb-4">
+            No Discord servers found where the Arcfuse bot is installed and you have access.
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Guild Name Input */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase tracking-wider text-muted-foreground font-extrabold flex items-center gap-1.5">
+                <Server className="w-3.5 h-3.5 text-primary" /> Discord Server Name
+              </label>
+              <select
+                required
+                value={selectedGuildId}
+                onChange={handleGuildChange}
+                className="w-full px-4 py-3 rounded-xl bg-surface-200 border border-glass-border focus:border-primary/50 focus:ring-1 focus:ring-primary/20 text-sm font-semibold outline-none transition-all appearance-none"
+              >
+                {guilds.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 py-3 rounded-xl border border-glass-border font-bold text-xs hover:bg-surface-200 transition-all active:scale-95"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="flex-grow py-3 rounded-xl bg-[#5865F2] hover:bg-[#4752c4] text-white font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5"
-            >
-              <span>Sync Server</span>
-            </button>
-          </div>
-        </form>
+            {/* Channels Selection */}
+            {availableChannels.length > 0 && (
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground font-extrabold">
+                  Select Sync Channels
+                </label>
+                <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto custom-scrollbar p-1">
+                  {availableChannels.map((ch) => {
+                    const isSelected = selectedChannels.includes(ch.id);
+                    return (
+                      <button
+                        key={ch.id}
+                        type="button"
+                        onClick={() => handleToggleChannel(ch.id)}
+                        className={cn(
+                          "flex items-center justify-between px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left truncate",
+                          isSelected
+                            ? "bg-[#5865F2]/10 border-[#5865F2]/30 text-[#5865F2]"
+                            : "bg-surface-200 border-glass-border hover:bg-surface-300 text-muted-foreground hover:text-foreground"
+                        )}
+                        title={`#${ch.name}`}
+                      >
+                        <span className="truncate">#{ch.name}</span>
+                        {isSelected && <Check className="w-3.5 h-3.5 shrink-0" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {availableChannels.length === 0 && (
+               <div className="text-xs text-muted-foreground italic">No accessible text channels found in this server.</div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 py-3 rounded-xl border border-glass-border font-bold text-xs hover:bg-surface-200 transition-all active:scale-95"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={selectedChannels.length === 0}
+                className="flex-grow py-3 rounded-xl bg-[#5865F2] hover:bg-[#4752c4] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5"
+              >
+                <span>Sync Server</span>
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

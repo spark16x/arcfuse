@@ -130,7 +130,7 @@ export function AuthForm({
       <p className="px-6 text-center text-xs text-muted-foreground leading-normal">
         {mode === "login" ? (
           <>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <button
               onClick={() => setMode("signup")}
               className="underline text-[var(--primary)] hover:text-foreground transition-colors font-medium cursor-pointer"
