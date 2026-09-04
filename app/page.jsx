@@ -274,7 +274,7 @@ export default function Home() {
               <span className="font-code-sm text-code-sm">git checkout -b social-integration</span>
             </div>
             <h2 className="font-headline-lg text-headline-lg mb-md">Built by the Community</h2>
-            <p className="text-secondary-fixed-dim font-body-md text-body-md mb-lg">Arcfuse isn't just a SaaS; it's a living ecosystem. We believe the tools that manage our social identity should be transparent and community-owned.</p>
+            <p className="text-secondary-fixed-dim font-body-md text-body-md mb-lg">Arcfuse isn&apos;t just a SaaS; it&apos;s a living ecosystem. We believe the tools that manage our social identity should be transparent and community-owned.</p>
             <div className="space-y-md">
               <div className="flex gap-md items-start">
                 <div className="w-6 h-6 rounded-full bg-primary-fixed text-primary flex items-center justify-center shrink-0 mt-1">
@@ -411,7 +411,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-xl reveal">
           <div>
             <h2 className="font-headline-lg text-headline-lg mb-sm">Community Showcase</h2>
-            <p className="text-secondary font-body-md text-body-md">What's happening right now in the Arcfuse ecosystem.</p>
+            <p className="text-secondary font-body-md text-body-md">What&apos;s happening right now in the Arcfuse ecosystem.</p>
           </div>
           <button 
             onClick={() => showToast('Loading community activity feed...', 'info')}
